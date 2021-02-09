@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import Main from './components/main/Main';
-import Header from './components/header/Header'
-import Footer from './components/footer/Footer'
+import Main from './components/Main';
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 export default {
   name: 'App',
@@ -24,14 +24,17 @@ export default {
 <style>
   .el-header{
     color: #333;
+    background-color: bisque;
   }
   .el-footer {
-    color: #333;
+    color: gray;
     text-align: center;
+    background-color: aqua;
   }
   .el-main {
     background-color: #ffffff;
     color: #333;
     text-align: center;
+    background-color: antiquewhite;
   }
 </style>
