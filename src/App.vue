@@ -1,9 +1,5 @@
 <template>
-  <el-container>
-    <el-header><Header></Header></el-header>
-    <el-main><Main></Main></el-main>
-    <el-footer><Footer></Footer></el-footer>
-  </el-container>
+  <router-view></router-view>
 </template>
 
 <script>
@@ -22,19 +18,5 @@ export default {
 </script>
 
 <style>
-  .el-header{
-    color: #333;
-    background-color: bisque;
-  }
-  .el-footer {
-    color: gray;
-    text-align: center;
-    background-color: aqua;
-  }
-  .el-main {
-    background-color: #ffffff;
-    color: #333;
-    text-align: center;
-    background-color: antiquewhite;
-  }
+
 </style>
