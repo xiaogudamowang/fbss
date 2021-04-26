@@ -1,20 +1,17 @@
 <template>
-  <el-row :gutter="20">
-    <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-    <el-col :span="16">
-      <div class="grid-content bg-purple">
-        <Menu></Menu>
-      </div>
-    </el-col>
-    <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-  </el-row>
+  <div class="div12222">
+    <MySelect></MySelect>
+    <Menu></Menu>
+  </div>
 </template>
 
 <script>
   import Menu from "./main/Menu"
+  import MySelect from "./main/MySelect"
     export default {
       name: "Main",
       components: {
+        MySelect,
         Menu
       },
       data() {
@@ -22,29 +19,14 @@
           activeName: 'first'
         };
       }
-
     }
 </script>
 
 <style>
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
+  .div12222{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1080px;
   }
 </style>

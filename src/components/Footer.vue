@@ -1,7 +1,7 @@
 <template>
     <div>
-      <p><span class="lf">©2021&nbsp;Leiduoduo&nbsp;</span></p>
-      <p><span class="lh">2020-12-01</span></p>
+        <div class="aaa">©2021&nbsp;Leiduoduo&nbsp;</div>
+        <div class="aaa">2020-12-01</div>
     </div>
 </template>
 
@@ -12,5 +12,8 @@
 </script>
 
 <style scoped>
-
+    .aaa{
+        display: flex;
+        justify-content:center;
+    }
 </style>

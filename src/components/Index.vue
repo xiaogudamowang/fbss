@@ -1,7 +1,7 @@
 <template>
-  <el-container>
+  <el-container class="div1">
     <el-header><Header></Header></el-header>
-    <el-main><Main></Main></el-main>
+    <el-main class="div2"><Main></Main></el-main>
     <el-footer><Footer></Footer></el-footer>
   </el-container>
 </template>
@@ -21,19 +21,28 @@
   }
 </script>
 
-<style>
+<style scoped>
   .el-header{
     color: #333;
     background-color: bisque;
   }
-  .el-footer {
-    color: gray;
-    text-align: center;
-    background-color: aqua;
+  .el-footer{
+    display: flex;
+    justify-content:center;
   }
+  
   .el-main {
     background-color: #ffffff;
     color: #333;
     background-color: antiquewhite;
   }
+  .div2{
+    display: flex;
+    justify-content: center;
+  }
+
+  .div1{
+    min-width: 1080px;
+  }
+
 </style>
