@@ -4,7 +4,7 @@
 
 <script>
     export default {
-        name: "changePassword"
+        name: "ShopOrder"
     }
 </script>
 

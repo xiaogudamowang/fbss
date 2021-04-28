@@ -19,7 +19,7 @@
             <i class="el-icon-menu"></i>
             <span slot="title">信息管理</span>
           </el-menu-item>
-          <el-menu-item index="">
+          <el-menu-item index="changePassword">
             <i class="el-icon-menu"></i>
             <span slot="title">密码修改</span>
           </el-menu-item>
