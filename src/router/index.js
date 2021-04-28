@@ -19,6 +19,8 @@ import AddBook from "../components/bookshop/AddBook";
 import BookAdmin from "../components/bookshop/BookAdmin";
 import BookShopMessage from "../components/bookshop/BookShopMessage";
 import ChangePassword from "../components/bookshop/ChangePassword";
+import ShopOrder from "../components/bookshop/ShopOrder";
+import BookData from "../components/bookshop/BookData";
 
 Vue.use(VueRouter);
 
@@ -57,7 +59,9 @@ export default new VueRouter({
         {path:'/addBook',component:AddBook},
         {path:'/bookAdmin',component:BookAdmin},
         {path:'/bookShopMessage',component:BookShopMessage},
-        {path:'/changePassword',component:ChangePassword}
+        {path:'/changePassword',component:ChangePassword},
+        {path:'/shopOrder',component:ShopOrder},
+        {path:'/bookData',component:BookData}
       ]
     },{
       path: '/admin',

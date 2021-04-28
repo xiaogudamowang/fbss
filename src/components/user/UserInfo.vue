@@ -25,7 +25,6 @@
     export default {
         name: "UserInfo",
       data() {
-
         var validatePass = (rule, value, callback) => {
           if (value === '') {
             callback(new Error('请输入昵称'));

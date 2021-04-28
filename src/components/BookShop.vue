@@ -23,11 +23,11 @@
             <i class="el-icon-menu"></i>
             <span slot="title">密码修改</span>
           </el-menu-item>
-          <el-menu-item index="">
+          <el-menu-item index="shopOrder">
             <i class="el-icon-menu"></i>
             <span slot="title">订单查看</span>
           </el-menu-item>
-          <el-menu-item index="">
+          <el-menu-item index="bookData">
             <i class="el-icon-menu"></i>
             <span slot="title">数据统计</span>
           </el-menu-item>

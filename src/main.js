@@ -7,10 +7,13 @@ import App from './App'
 import VueRouter from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import * as echarts from 'echarts';
+
 
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 Vue.use(ElementUI);
+Vue.prototype.$echarts = echarts;
 
 /* eslint-disable no-new */
 new Vue({
