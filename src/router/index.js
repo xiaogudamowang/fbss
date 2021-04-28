@@ -16,6 +16,8 @@ import UserInfo from "../components/user/UserInfo";
 import UserAddress from "../components/user/UserAddress";
 import Order from "../components/user/Order";
 import AddBook from "../components/bookshop/AddBook";
+import BookAdmin from "../components/bookshop/BookAdmin";
+import BookShopMessage from "../components/bookshop/BookShopMessage";
 
 Vue.use(VueRouter);
 
@@ -51,7 +53,9 @@ export default new VueRouter({
       component: BookShop,
       children:[
         {path:'/',redirect:'/addBook'},
-        {path:'/addBook',component:AddBook}
+        {path:'/addBook',component:AddBook},
+        {path:'/bookAdmin',component:BookAdmin},
+        {path:'/bookShopMessage',component:BookShopMessage}
       ]
     },{
       path: '/admin',

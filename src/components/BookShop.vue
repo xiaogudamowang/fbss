@@ -11,13 +11,17 @@
             <i class="el-icon-menu"></i>
             <span slot="title">添加书籍</span>
           </el-menu-item>
-          <el-menu-item index="">
+          <el-menu-item index="bookAdmin">
             <i class="el-icon-menu"></i>
             <span slot="title">书籍管理</span>
           </el-menu-item>
-          <el-menu-item index="">
+          <el-menu-item index="bookShopMessage">
             <i class="el-icon-menu"></i>
             <span slot="title">信息管理</span>
+          </el-menu-item>
+          <el-menu-item index="">
+            <i class="el-icon-menu"></i>
+            <span slot="title">密码修改</span>
           </el-menu-item>
           <el-menu-item index="">
             <i class="el-icon-menu"></i>

@@ -89,7 +89,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    margin: 100px 0px;
+    margin: 60px 0px;
   }
   .div2{
     display: flex;
