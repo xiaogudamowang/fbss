@@ -10,6 +10,12 @@ import NotFound from '../components/notfound/NotFound'
 import Book from '../components/Book'
 import User from '../components/User'
 import Login from '../components/Login'
+import BookShop from "../components/BookShop";
+import Admin from "../components/Admin";
+import UserInfo from "../components/user/UserInfo";
+import UserAddress from "../components/user/UserAddress";
+import Order from "../components/user/Order";
+import AddBook from "../components/bookshop/AddBook";
 
 Vue.use(VueRouter);
 
@@ -26,11 +32,30 @@ export default new VueRouter({
         {path: '/index1-3', component: Index3},
         {path: '/index1-4', component: Index4},
         {path: '/book',component: Book},
-        {path: '/user', component: User}
+        {
+          path: '/user',
+          component: User,
+          children: [
+            {path: '/', redirect: '/info'},
+            {path:'/info',component: UserInfo},
+            {path:'/address',component: UserAddress},
+            {path:'/order',component: Order}
+          ]
+        }
       ]
     },{
       path: '/login',
       component: Login
+    },{
+      path: '/bookshop',
+      component: BookShop,
+      children:[
+        {path:'/',redirect:'/addBook'},
+        {path:'/addBook',component:AddBook}
+      ]
+    },{
+      path: '/admin',
+      component: Admin
     },
     {path: '*', component: NotFound}
   ],

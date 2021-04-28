@@ -10,6 +10,7 @@
             <el-button type="text" class="button">操作按钮</el-button>
           </div>
         </div>
+
       </el-card>
     </div>
   </div>
@@ -62,7 +63,14 @@
         book(){
           this.$router.push("/book");
         }
-      }
+      },
+    created() {
+      this.axios.get('http://localhost:8080/static/mock/book.json').then(
+        response=>{
+          this.list=response.data;
+        }
+      )
+    }
     }
 </script>
 

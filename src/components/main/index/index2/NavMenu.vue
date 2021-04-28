@@ -3,7 +3,8 @@
     default-active="2"
     class="el-menu-vertical-demo"
     @open="handleOpen"
-    @close="handleClose">
+    @close="handleClose"
+    router>
     <!--<el-submenu index="1">-->
       <!--<template slot="title">-->
         <!--<i class="el-icon-location"></i>-->
@@ -26,11 +27,11 @@
       <i class="el-icon-menu"></i>
       <span slot="title">排行一</span>
     </el-menu-item>
-    <el-menu-item index="1">
+    <el-menu-item index="2">
       <i class="el-icon-menu"></i>
       <span slot="title">排行二</span>
     </el-menu-item>
-    <el-menu-item index="1">
+    <el-menu-item index="3">
       <i class="el-icon-menu"></i>
       <span slot="title">排行三</span>
     </el-menu-item>

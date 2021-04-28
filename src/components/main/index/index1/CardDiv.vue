@@ -3,11 +3,11 @@
       <div v-for="(item,i) in list" style="margin: 5px;cursor:pointer;" @click="book">
         <el-card shadow="hover" :body-style="{ padding: '6px' }">
           <img :src="item.src" class="image">
-          <div style="padding: 14px;">
-            <span>{{item.span}}</span>
-            <div class="bottom clearfix">
-              <time class="time">{{item.time}}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
+          <div style="padding: 14px; display: flex; flex-direction:column">
+            <span>{{item.bookName}}</span>
+            <div class="mas">
+              <div>{{item.author}}</div>
+              <div class="time">{{item.price.toFixed(2)}}</div>
             </div>
           </div>
         </el-card>
@@ -20,37 +20,7 @@
         name: "CardDiv",
       data(){
         return{
-          list:[
-            {
-              src: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-              span: "好吃的汉堡",
-              time: "2021-02-04"
-            },{
-              src: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-              span: "好吃的汉堡",
-              time: "2021-02-04"
-            },{
-              src: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-              span: "好吃的汉堡",
-              time: "2021-02-04"
-            },{
-              src: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-              span: "好吃的汉堡",
-              time: "2021-02-04"
-            },{
-              src: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-              span: "好吃的汉堡",
-              time: "2021-02-04"
-            },{
-              src: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-              span: "好吃的汉堡",
-              time: "2021-02-04"
-            },{
-              src: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-              span: "好吃的汉堡",
-              time: "2021-02-04"
-            }
-          ]
+          list:[]
         }
       },
       computed:{
@@ -62,6 +32,13 @@
           book(){
             this.$router.push("/book");
           }
+      },
+      created() {
+          this.axios.get('http://localhost:8080/static/mock/book.json').then(
+            response=>{
+              this.list=response.data;
+            }
+          )
       }
     }
 </script>
@@ -74,22 +51,18 @@
 
   }
   .time {
-    font-size: 13px;
+    font-size: 23px;
     color: #999;
   }
 
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
-  .button {
-    padding: 0;
-    float: right;
+  .mas{
+    display: flex;
+    justify-content:space-between;
   }
 
   .image {
-    width: 100%;
+    width: 235px;
+    height: 236px;
     display: block;
   }
 

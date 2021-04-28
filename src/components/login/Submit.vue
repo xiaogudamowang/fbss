@@ -29,7 +29,7 @@
 
         var validatePass = (rule, value, callback) => {
           if (value === '') {
-            callback(new Error('请输入密码'));
+            callback(new Error('请输入账号'));
           } else {
             if (this.ruleForm.pass !== '') {
               this.$refs.ruleForm.validateField('checkPass');
@@ -39,9 +39,7 @@
         };
         var validatePass2 = (rule, value, callback) => {
           if (value === '') {
-            callback(new Error('请再次输入密码'));
-          } else if (value !== this.ruleForm.code) {
-            callback(new Error('两次输入密码不一致!'));
+            callback(new Error('请输入密码'));
           } else {
             callback();
           }
@@ -66,8 +64,21 @@
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              alert(this.ruleForm.resource);
-              this.$router.push("/index")
+              if (this.ruleForm.resource === '顾客'){
+                this.axios.get('http://localhost:8080/static/mock/user.json').then(
+                  res=>{
+                    localStorage.setItem('userInfo',JSON.stringify(res.data));
+                  }
+                )
+                this.$router.push("/index");
+              } else if(this.ruleForm.resource === '商家'){
+                this.$router.push("/bookshop");
+              } else if(this.ruleForm.resource === '管理员'){
+                this.$router.push("/admin");
+              } else{
+                callback(new Error('跳转错误!'));
+              }
+
             } else {
               console.log('error submit!!');
               return false;

@@ -2,7 +2,7 @@
     <div>
       <el-carousel indicator-position="outside">
         <el-carousel-item v-for="item in 4" :key="item">
-          <h3>{{ item }}</h3>
+          <img src="http://img62.ddimg.cn/upload_img/00822/2/750x315-1619435328.jpg" style="width: 100%;height: 100%"/>
         </el-carousel-item>
       </el-carousel>
     </div>

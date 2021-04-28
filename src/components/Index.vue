@@ -22,20 +22,7 @@
 </script>
 
 <style scoped>
-  .el-header{
-    color: #333;
-    background-color: bisque;
-  }
-  .el-footer{
-    display: flex;
-    justify-content:center;
-  }
-  
-  .el-main {
-    background-color: #ffffff;
-    color: #333;
-    background-color: antiquewhite;
-  }
+
   .div2{
     display: flex;
     justify-content: center;

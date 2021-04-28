@@ -11,7 +11,11 @@
       name: "Header",
       methods:{
         user(){
-          this.$router.push("/user");
+          if (localStorage.getItem("userInfo") == null || localStorage.getItem("userInfo") == ""){
+            this.$router.push("/login");
+          } else{
+            this.$router.push("/user");
+          }
         }
       }
     }

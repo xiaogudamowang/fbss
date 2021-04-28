@@ -1,7 +1,7 @@
 <template>
     <div class="div1">
       <NavMenu1></NavMenu1>
-      <div></div>
+      <router-view></router-view>
     </div>
 </template>
 
@@ -16,5 +16,7 @@
 <style scoped>
   .div1{
     width: 1080px;
+    display: flex;
+    flex-direction: row;
   }
 </style>
