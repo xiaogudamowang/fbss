@@ -21,6 +21,7 @@ import BookShopMessage from "../components/bookshop/BookShopMessage";
 import ChangePassword from "../components/bookshop/ChangePassword";
 import ShopOrder from "../components/bookshop/ShopOrder";
 import BookData from "../components/bookshop/BookData";
+import UserAdmin from "../components/admin/UserAdmin";
 
 Vue.use(VueRouter);
 
@@ -65,7 +66,11 @@ export default new VueRouter({
       ]
     },{
       path: '/admin',
-      component: Admin
+      component: Admin,
+      children:[
+        {path:'/',redirect:'/userAdmin'},
+        {path:'/userAdmin',component: UserAdmin}
+      ]
     },
     {path: '*', component: NotFound}
   ],

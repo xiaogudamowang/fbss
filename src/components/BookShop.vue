@@ -62,6 +62,6 @@
   .div2{
     display: flex;
     flex-direction: row;
-    width: 1080px;
+    width: 100%;
   }
 </style>
