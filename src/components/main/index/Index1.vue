@@ -1,7 +1,5 @@
 <template>
   <div class="div1">
-    {{info}}
-    <Carousel></Carousel>
     <CardDiv></CardDiv>
   </div>
 </template>
@@ -19,11 +17,6 @@
             "mes" : null
           }
         };
-      },
-      created(){
-        this.axios.get('http://localhost:8080/static/mock/data.json').then(response=>{
-          this.info=response.data;
-        })
       },
       methods: {
 

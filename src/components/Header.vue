@@ -1,7 +1,10 @@
 <template>
   <div class="div1">
     <a href="http://localhost:8080/"><img class="header-logo" src="../static/某书店Logo（header大）.png"></a>
-    <div style="margin: 8px 0;cursor:pointer " @click="user"><el-avatar icon="el-icon-user-solid"></el-avatar></div>
+    <div style="display: flex;flex-direction: row;">
+      <div style="margin: 8px 0;cursor:pointer " @click="user"><el-avatar icon="el-icon-user-solid"></el-avatar></div>
+      <el-button @click="logout" size="mini" style="margin: 10px;">登 出</el-button>
+    </div>
   </div>
 
 </template>
@@ -16,6 +19,10 @@
           } else{
             this.$router.push("/user");
           }
+        },
+        logout(){
+          localStorage.setItem("userInfo","");
+          this.$router.push('/login');
         }
       }
     }

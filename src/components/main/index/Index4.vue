@@ -1,89 +1,103 @@
 <template>
     <div class="div1">
       <el-table
-        ref="multipleTable"
         :data="tableData"
-        tooltip-effect="dark"
-        style="width: 100%"
-        @selection-change="handleSelectionChange">
+        style="width: 100%">
         <el-table-column
-          type="selection"
-          width="55">
+          fixed
+          label="书籍编号"
+          prop="bookCode"
+          width="200">
         </el-table-column>
         <el-table-column
-          label="日期"
-          width="120">
-          <template slot-scope="scope">{{ scope.row.date }}</template>
+          fixed
+          label="书籍名称"
+          prop="bookName"
+          width="200">
         </el-table-column>
         <el-table-column
-          prop="name"
-          label="姓名"
-          width="120">
+          label="数量"
+          prop="number"
+          width="150">
         </el-table-column>
         <el-table-column
-          prop="address"
-          label="地址"
-          show-overflow-tooltip>
+          label="单价"
+          prop="price"
+          width="250">
+        </el-table-column>
+        <el-table-column
+          label="共计"
+          prop="total"
+          width="150">
+        </el-table-column>
+        <el-table-column
+          label="书店名称"
+          prop="shopName"
+          width="100">
+        </el-table-column>
+        <el-table-column
+          align="right"
+          width="200px"
+          fixed="right">
+          <template slot="header" slot-scope="scope">
+            <el-input
+              v-model="search"
+              size="mini"
+              placeholder="输入关键字搜索"/>
+          </template>
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+          </template>
         </el-table-column>
       </el-table>
-      <div style="margin-top: 20px">
-        <el-button @click="toggleSelection([tableData[1], tableData[2]])">切换第二、第三行的选中状态</el-button>
-        <el-button @click="toggleSelection()">取消选择</el-button>
-      </div>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="1000"style=" margin: 15px auto">
+      </el-pagination>
     </div>
 </template>
 
 <script>
+import {gatCarList} from "@/api/index.js";
+import {delCarByCarCode} from "@/api/index.js";
     export default {
         name: "Index4",
       data() {
         return {
-          tableData: [{
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-08',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-06',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-07',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }],
-          multipleSelection: []
+          centerDiaologVisible: false,
+          tableData: [],
+          search: ''
         }
       },
-
       methods: {
-        toggleSelection(rows) {
-          if (rows) {
-            rows.forEach(row => {
-              this.$refs.multipleTable.toggleRowSelection(row);
-            });
-          } else {
-            this.$refs.multipleTable.clearSelection();
-          }
+        handleDelete(index, row) {
+          console.log(index, row);
+          var carCode = this.tableData[index].carCode;
+          let param = new URLSearchParams();
+          param.append('carCode',carCode);
+          delCarByCarCode(param).then(res=>{
+            if(res.data){
+              var userCode = JSON.parse(localStorage.getItem('userInfo')).userCode;
+              gatCarList(userCode).then(response=>{
+                this.tableData=response.data
+              })
+            }
+          })
         },
-        handleSelectionChange(val) {
-          this.multipleSelection = val;
+        handleChange(value) {
+          console.log(value);
         }
+      },
+      created(){
+        var userCode = JSON.parse(localStorage.getItem('userInfo')).userCode;
+        gatCarList(userCode).then(response=>{
+          console.log(response.data);
+          this.tableData=response.data
+        })
       }
     }
 </script>
@@ -91,5 +105,6 @@
 <style scoped>
   .div1{
     width: 1040px;
+
   }
 </style>

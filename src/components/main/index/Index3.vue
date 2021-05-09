@@ -1,57 +1,53 @@
 <template>
     <div class="div1">
-      <div style="width: 250px"><el-menu
-        default-active="2"
+      <div style="width: 250px">
+        <el-menu
+        default-active="1"
         class="el-menu-vertical-demo"
         @open="handleOpen"
-        @close="handleClose">
-        <!--<el-submenu index="1">-->
-        <!--<template slot="title">-->
-        <!--<i class="el-icon-location"></i>-->
-        <!--<span>导航一</span>-->
-        <!--</template>-->
-        <!--<el-menu-item-group>-->
-        <!--<template slot="title">分组一</template>-->
-        <!--<el-menu-item index="1-1">选项1</el-menu-item>-->
-        <!--<el-menu-item index="1-2">选项2</el-menu-item>-->
-        <!--</el-menu-item-group>-->
-        <!--<el-menu-item-group title="分组2">-->
-        <!--<el-menu-item index="1-3">选项3</el-menu-item>-->
-        <!--</el-menu-item-group>-->
-        <!--<el-submenu index="1-4">-->
-        <!--<template slot="title">选项4</template>-->
-        <!--<el-menu-item index="1-4-1">选项1</el-menu-item>-->
-        <!--</el-submenu>-->
-        <!--</el-submenu>-->
-        <el-menu-item index="1">
+        @close="handleClose"
+        router
+        >
+        <el-menu-item index="1" :route="{path: list[0].url, query: { sortName: list[0].sortName }}">
           <i class="el-icon-menu"></i>
-          <span slot="title">菜单一</span>
+          <span slot="title">文学</span>
         </el-menu-item>
-        <el-menu-item index="2">
+        <el-menu-item index="2" :route="{path: list[1].url, query: { sortName: list[1].sortName }}">
           <i class="el-icon-menu"></i>
-          <span slot="title">菜单二</span>
+          <span slot="title">教育</span>
         </el-menu-item>
-        <el-menu-item index="3">
+        <el-menu-item index="3" :route="{path: list[2].url, query: { sortName: list[2].sortName }}">
           <i class="el-icon-menu"></i>
-          <span slot="title">菜单三</span>
+          <span slot="title">科学</span>
         </el-menu-item>
-        <el-menu-item index="4">
-          <i class="el-icon-menu"></i>
-          <span slot="title">菜单四</span>
-        </el-menu-item>
-      </el-menu></div>
+      </el-menu>
+      </div>
+      <router-view></router-view>
     </div>
 </template>
 
 <script>
+
     export default {
       name: "Index3",
+      data(){
+        return{
+          list:[
+            {url:'/sort',sortName:'文学'},
+            {url:'/sort',sortName:'教育'},
+            {url:'/sort',sortName:'科学'}
+          ]
+        }
+      },
       methods: {
         handleOpen(key, keyPath) {
           console.log(key, keyPath);
         },
         handleClose(key, keyPath) {
           console.log(key, keyPath);
+        },
+        push(){
+          console.log('22222');
         }
       }
     }
@@ -60,5 +56,7 @@
 <style scoped>
   .div1{
     width: 1080px;
+    display: flex;
+    flex-direction: row;
   }
 </style>

@@ -22,6 +22,9 @@ import ChangePassword from "../components/bookshop/ChangePassword";
 import ShopOrder from "../components/bookshop/ShopOrder";
 import BookData from "../components/bookshop/BookData";
 import UserAdmin from "../components/admin/UserAdmin";
+import ShopAdmin from "../components/admin/ShopAdmin";
+import PBook from "../components/main/index/index2/PBook";
+import Sort from "../components/main/index/index3/Sort";
 
 Vue.use(VueRouter);
 
@@ -34,10 +37,22 @@ export default new VueRouter({
       children: [
         {path: '/', redirect: '/index1-1'},
         {path: '/index1-1', component: Index1},
-        {path: '/index1-2', component: Index2},
-        {path: '/index1-3', component: Index3},
+        {
+          path: '/index1-2',
+          component: Index2,
+          children:[
+            {path:'/',redirect:'/pBook'},
+            {path:'/pBook',component: PBook}
+          ]
+        },
+        {
+          path: '/index1-3', component: Index3,
+          children:[
+            {path:'/sort',component:Sort}
+          ]
+        },
         {path: '/index1-4', component: Index4},
-        {path: '/book',component: Book},
+        {path: '/book',name: 'book',component: Book},
         {
           path: '/user',
           component: User,
@@ -69,7 +84,8 @@ export default new VueRouter({
       component: Admin,
       children:[
         {path:'/',redirect:'/userAdmin'},
-        {path:'/userAdmin',component: UserAdmin}
+        {path:'/userAdmin',component: UserAdmin},
+        {path:'/shopAdmin',component: ShopAdmin}
       ]
     },
     {path: '*', component: NotFound}

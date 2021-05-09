@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "shopCode": "1651654164635486465",
+    "shopName": "随便书店",
+    "shopPicture": "test",
+    "phoneNumber": "12345678910",
+    "password": "123456",
+    "e_mail": "12345679@qq.com",
+    "address": "test",
+    "memberTime": "30",
+    "QQ": "12345678910",
+    "message": "test",
+    "createAt": "test",
+    "updateAt": "test",
+    "exist": 1
+  }
+]

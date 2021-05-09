@@ -7,12 +7,6 @@
       <el-form-item label="邮箱" prop="pass">
         <el-input type="input" v-model="ruleForm.pass" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="性别">
-        <el-radio-group v-model="ruleForm.resource">
-          <el-radio label="男"></el-radio>
-          <el-radio label="女"></el-radio>
-        </el-radio-group>
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -22,6 +16,7 @@
 </template>
 
 <script>
+  import {updateUser} from "@/api/index.js"
     export default {
         name: "UserInfo",
       data() {
@@ -63,7 +58,20 @@
           this.$refs[formName].validate((valid) => {
             if (valid) {
               // 提交用户信息的业务
+              let param = new URLSearchParams();
+              var userInfo = JSON.parse(localStorage.getItem('userInfo'));
+              var userCode = userInfo.userCode;
+              param.append('userName',this.ruleForm.code);
+              param.append('e_mail',this.ruleForm.pass);
+              param.append('userCode',userCode);
+              updateUser(param).then(res=>{
 
+                if(res.data){
+                  userInfo.userName = this.ruleForm.code;
+                  userInfo.e_mail = this.ruleForm.pass;
+                  localStorage.setItem('userInfo',JSON.stringify(userInfo));
+                }
+              })
             } else {
               console.log('error submit!!');
               return false;

@@ -12,17 +12,9 @@
             <i class="el-icon-menu"></i>
             <span slot="title">顾客管理</span>
           </el-menu-item>
-          <el-menu-item index="">
+          <el-menu-item index="/shopAdmin">
             <i class="el-icon-menu"></i>
             <span slot="title">商家管理</span>
-          </el-menu-item>
-          <el-menu-item index="">
-            <i class="el-icon-menu"></i>
-            <span slot="title">菜单三</span>
-          </el-menu-item>
-          <el-menu-item index="">
-            <i class="el-icon-menu"></i>
-            <span slot="title"></span>
           </el-menu-item>
         </el-menu>
       </div>
@@ -56,5 +48,6 @@
   .div2{
     display: flex;
     flex-direction: row;
+    width: 100%;
   }
 </style>

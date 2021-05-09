@@ -1,23 +1,23 @@
 <template>
     <div class="div1">
-      <div class="div2" v-for="item in [1,2,3,4,5,6]">
+      <div class="div2" v-for="item in list">
         <div class="div3">
           <div>
-            bookName
+            {{item.bookName}}
           </div>
           <div>
-            number x price
+            {{item.number}} x {{item.price}}
           </div>
         </div>
-        <div>
-          shopName
+        <div class="div3">
+          {{item.shopName}}
         </div>
         <div class="div3">
           <div>
-            state
+            {{item.state}}
           </div>
           <div>
-            total
+            {{item.total}}
           </div>
         </div>
       </div>
@@ -25,8 +25,21 @@
 </template>
 
 <script>
+  import {getOrderList} from "@/api/index.js"
     export default {
-        name: "Order"
+        name: "Order",
+      data(){
+          return{
+            list:[]
+          }
+      },
+      created() {
+        var userCode = JSON.parse(localStorage.getItem("userInfo")).userCode;
+        getOrderList(userCode).then(res=>{
+          console.log(res.data)
+          this.list = res.data;
+        })
+      }
     }
 </script>
 
@@ -40,11 +53,11 @@
     width: 80%;
     border: aqua 1px solid;
     border-radius: 6px;
-    height: 100px;
     margin: 0px 20px 10px 40px;
   }
   .div3{
     display: flex;
     justify-content: space-between;
+    margin: 9px;
   }
 </style>

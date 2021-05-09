@@ -42,11 +42,11 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -81,7 +81,6 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit">修改</el-button>
-              <el-button>取消</el-button>
             </el-form-item>
         </el-form>
       </div>
@@ -90,53 +89,29 @@
 </template>
 
 <script>
+  import {getUserList} from "@/api/index.js"
+  import {delUserByUserCode} from "@/api/index.js"
+  import {updateUser1} from "@/api/index.js"
   export default {
     name: "UserAdmin",
     data() {
       return {
         centerDiaologVisible: false,
         form: {
+          id:'',
           userCode: '',
           userName: '',
           userPicture: '',
           gender: '',
           phoneNumber: '',
           password: '',
-          e_mail: ''
+          address: '',
+          e_mail: '',
+          createAt: '',
+          updateAt: '',
+          exist: ''
         },
-        tableData: [{
-          userCode: '',
-          userName: '',
-          userPicture: '',
-          gender: '',
-          phoneNumber: '',
-          password: '',
-          e_mail: ''
-        },{
-          userCode: '',
-          userName: '',
-          userPicture: '',
-          gender: '',
-          phoneNumber: '',
-          password: '',
-          e_mail: ''
-        },{
-          userCode: '',
-          userName: '',
-          userPicture: '',
-          gender: '',
-          phoneNumber: '',
-          password: '',
-          e_mail: ''
-        },{
-          userCode: '',
-          userName: '',
-          userPicture: '',
-          gender: '',
-          phoneNumber: '',
-          password: '',
-          e_mail: ''
-        }],
+        tableData: [],
         search: ''
       }
     },
@@ -149,26 +124,75 @@
         this.form.userPicture = this.tableData[index].userPicture
         this.form.gender = this.tableData[index].gender
         this.form.phoneNumber = this.tableData[index].phoneNumber
+        this.form.address = this.tableData[index].address
         this.form.password = this.tableData[index].password
         this.form.e_mail = this.tableData[index].e_mail
       },
       handleDelete(index, row) {
         console.log(index, row);
+        var userCode = this.tableData[index].userCode;
+        let param = new URLSearchParams();
+        param.append("userCode",userCode)
+        delUserByUserCode(param).then(res=>{
+          if(res.data === 1){
+            getUserList().then(response=>{
+              this.tableData = response.data;
+              var data = this.tableData;
+              response.data.forEach(function (item, index) {
+                if (item.gender === 1){
+                  console.log(item.gender)
+                  data[index].gender = '男';
+                } else {
+                  data[index].gender = '女';
+                }
+              })
+            })
+          }else{
+            alert('删除失败')
+          }
+        })
       },
       onSubmit() {
-        console.log('submit!');
+        let param = new URLSearchParams();
+        param.append("userCode",this.form.userCode)
+        param.append("userName",this.form.userName)
+        param.append("userPicture",this.form.userPicture)
+        if (this.form.gender === '男'){
+          param.append("gender",1)
+        } else{
+          param.append("gender",0)
+        }
+        param.append("phoneNumber",this.form.phoneNumber)
+        param.append("password",this.form.password)
+        param.append("address",this.form.address)
+        param.append("e_mail",this.form.e_mail)
+        updateUser1(param).then(res=>{
+          if (res.data) {
+            alert('修改成功')
+            getUserList().then(response=>{
+              this.tableData = response.data;
+              var data = this.tableData;
+              response.data.forEach(function (item, index) {
+                if (item.gender === 1){
+                  data[index].gender = '男';
+                } else {
+                  data[index].gender = '女';
+                }
+              })
+            })
+          }
+        })
       },
       handleChange(value) {
         console.log(value);
       }
     },
     created(){
-      this.axios.get('http://localhost:8080/static/mock/user.json').then(response=>{
+      getUserList().then(response=>{
         this.tableData = response.data;
         var data = this.tableData;
         response.data.forEach(function (item, index) {
           if (item.gender === 1){
-            console.log(item.gender)
             data[index].gender = '男';
           } else {
             data[index].gender = '女';

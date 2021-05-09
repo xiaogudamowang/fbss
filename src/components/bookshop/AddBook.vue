@@ -21,7 +21,7 @@
         <el-form-item label="作者">
           <el-input v-model="form.author"></el-input>
         </el-form-item>
-        <el-form-item label="书籍库存">
+        <el-form-item label="版次">
           <el-input-number v-model="form.edition" @change="handleChange" :min="1" :max="10"></el-input-number>
         </el-form-item>
       </div>
@@ -55,11 +55,13 @@
 </template>
 
 <script>
+  import {addBook} from "@/api/index.js"
     export default {
         name: "AddBook",
       data() {
         return {
           form: {
+            id:'',
             bookName: '',
             ISBN: '',
             src: '',
@@ -69,13 +71,34 @@
             sortCode: 1,
             message: '',
             price: 0.00,
-            number: 0
+            number: 0,
+            createAt: '',
+            updateAt: '',
+            exist: ''
           }
         }
       },
       methods: {
         onSubmit() {
           console.log('submit!');
+          var shopCode = JSON.parse(localStorage.getItem("shopInfo")).shopCode;
+          let param = new URLSearchParams();
+          param.append('bookName',this.form.bookName);
+          param.append('ISBN',this.form.ISBN);
+          param.append('src',this.form.src);
+          param.append('press',this.form.press);
+          param.append('author',this.form.author);
+          param.append('edition',this.form.edition);
+          param.append('sortCode',this.form.sortCode);
+          param.append('shopCode',shopCode);
+          param.append('message',this.form.message);
+          param.append('price',this.form.price);
+          param.append('number',this.form.number);
+          addBook(param).then(res=>{
+            if (res.data === 1){
+              alert('添加成功')
+            }
+          })
         },
         handleChange(value) {
           console.log(value);

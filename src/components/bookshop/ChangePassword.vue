@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import {changeShopPassword} from "@/api/index.js"
     export default {
         name: "ChangePassword",
       data() {
@@ -77,7 +78,19 @@
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              alert('submit!');
+              let param = new URLSearchParams();
+              var password = this.ruleForm.pass;
+              param.append("shopCode",JSON.parse(localStorage.getItem("shopInfo")).shopCode);
+              param.append("password",password);
+              changeShopPassword(param).then(res=>{
+                if(res.data === 1){
+                  alert('修改成功')
+                  this.$router.push("/login");
+                }else {
+                  alert('修改失败')
+                }
+              })
+
             } else {
               console.log('error submit!!');
               return false;

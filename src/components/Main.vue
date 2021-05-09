@@ -1,17 +1,14 @@
 <template>
   <div class="div12222">
-    <MySelect></MySelect>
     <Menu></Menu>
   </div>
 </template>
 
 <script>
   import Menu from "./main/Menu"
-  import MySelect from "./main/MySelect"
     export default {
       name: "Main",
       components: {
-        MySelect,
         Menu
       },
       data() {

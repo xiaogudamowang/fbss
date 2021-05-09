@@ -8,12 +8,14 @@ import VueRouter from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import * as echarts from 'echarts';
+import common from './common'
 
 
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.prototype.$echarts = echarts;
+Vue.prototype.$common = common;
 
 /* eslint-disable no-new */
 new Vue({

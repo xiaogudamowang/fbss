@@ -2,32 +2,71 @@
     <div class="div1">
       <div class="div2">
         <div class="div3">
-          <el-carousel :interval="5000" arrow="always">
-            <el-carousel-item v-for="item in 4" :key="item">
-              <div style="background: url(http://img3m0.ddimg.cn/83/2/29199440-1_u_17.jpg); width: 300px;height: 300px">
-              </div>
-            </el-carousel-item>
-          </el-carousel>
+              <!--<div style="background: url(http://img3m0.ddimg.cn/83/2/29199440-1_u_17.jpg); width: 300px;height: 300px">-->
+              <!--</div>-->
+          <img :src="book.src" style="width: 280px"></img>
         </div>
         <div class="div4">
-          <div class="div6 divt">文城（余华新书，时隔8年重磅归来，《活着》之后又一精彩力作！限量赠送珍藏余华肖像漫画）</div>
-          <div class="divt">余华时隔8年重磅新作！写《活着》的余华又回来了！人生就是自己的往事和他人的序章。关于一个人和他一生的寻找，以及一群人和一个汹涌的年代。精彩过瘾，不负等待！易烊千玺挚爱作家。限量赠送余华珍藏生肖漫画！</div>
-          <div class="divt">作者:余华 著 ， 新经典 出品出版社:北京十月文艺出版社出版时间:2021年03月 </div>
-          <div class="divt">¥56.10</div>
-          <div class="div5">
-            <el-button type="primary">主要按钮</el-button>
-            <el-button type="success">成功按钮</el-button>
-          </div>
-        </div>
 
+          <div class="div6 divt">《{{book.bookName}}》</div>
+          <div class="divt">简介：{{book.message}}</div>
+          <div class="divt">作者：{{book.author}} 著</div>
+          <div class="divt">出版社：{{book.press}}</div>
+          <div class="divt">出版时间：{{book.createAt}} </div>
+          <div class="divt">版次：{{book.edition}} </div>
+          <div class="div7 divt">¥{{book.price}}</div>
+          <el-input-number v-model="num" :min="1" :max="10" label="描述文字" ></el-input-number>
+          <div class="div5">
+            <el-button type="primary">加入购物车</el-button>
+            <el-button type="success" @click="pay">立即下单</el-button>
+          </div>
+
+          <el-dialog title="支付宝" :visible.sync="centerDiaologVisible" width="400px" center>
+            <div>
+              <img :src="'http://localhost:8888/alipay/pay?bookCode='+bookCode+'&userCode='+userCode+'&number='+num">
+            </div>
+          </el-dialog>
+
+
+
+        </div>
       </div>
 
     </div>
 </template>
 
 <script>
+  import {getBookListByCode} from '../api/index.js'
     export default {
-        name: "Book"
+        name: "Book",
+      data(){
+        return{
+          centerDiaologVisible: false,
+          bookCode: '',
+          userCode: '',
+          num:'',
+          book:{}
+        }
+      },
+      created() {
+        this.bookCode = this.$route.query.code
+        //alert(this.bookCode);
+      }
+      ,
+      mounted() {
+        //alert(this.bookCode);
+        getBookListByCode(this.bookCode).then(response=>{
+          this.book = response.data;
+          console.log(this.book)
+        })
+      },
+      methods:{
+        pay(){
+          this.centerDiaologVisible = true;
+          this.bookCode = this.book.bookCode;
+          this.userCode = JSON.parse(localStorage.getItem('userInfo')).userCode
+        }
+      }
     }
 </script>
 
@@ -69,13 +108,17 @@
   .div5{
     display: flex;
     justify-content: space-evenly;
+    margin: 10px;
   }
   .div6{
     color: #F56C6C;
     font-weight:bold;
-
+    font-size: 30px;
   }
-
+  .div7{
+    color: #F56C6C;
+    font-size: 25px;
+  }
   .divt{
     margin: 10px 0px 10px 0px;
   }

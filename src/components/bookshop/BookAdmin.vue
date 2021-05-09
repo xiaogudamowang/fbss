@@ -12,7 +12,7 @@
         </el-table-column>
         <el-table-column
           label="ISBN"
-          prop="ISBN"
+          prop="isbn"
           width="150">
         </el-table-column>
         <el-table-column
@@ -38,7 +38,8 @@
         <el-table-column
           label="价格"
           prop="price"
-          width="100">
+          width="100"
+        >
         </el-table-column>
         <el-table-column
           align="right"
@@ -53,11 +54,11 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+              @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -74,7 +75,7 @@
                 <el-input v-model="form.bookName"></el-input>
               </el-form-item>
               <el-form-item label="ISBN">
-                <el-input v-model="form.ISBN"></el-input>
+                <el-input v-model="form.isbn"></el-input>
               </el-form-item>
             </div>
             <div class="div2">
@@ -114,8 +115,7 @@
             </div>
             <div class="div2">
               <el-form-item>
-                <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                <el-button>取消</el-button>
+                <el-button type="primary" @click="onSubmit">修改</el-button>
               </el-form-item>
             </div>
           </el-form>
@@ -125,12 +125,17 @@
 </template>
 
 <script>
+  import {getBookListByShopCode} from "@/api/index.js"
+  import {updBook} from "@/api/index.js"
+  import {delBookByCode} from "@/api/index.js"
     export default {
         name: "BookAdmin",
       data() {
         return {
           centerDiaologVisible: false,
           form: {
+            id:'',
+            bookCode:'',
             bookName: '',
             ISBN: '',
             src: '',
@@ -140,13 +145,16 @@
             sortCode: 1,
             message: '',
             price: 0.00,
-            number: 0
+            number: 0,
+            createAt: '',
+            updateAt: '',
+            exist: ''
           },
           tableData: [{
             id: '',
             bookCode: '',
             bookName: '',
-            ISBN: '',
+            isbn: '',
             src: '',
             press: '',
             author: '',
@@ -157,12 +165,15 @@
             shopCode: '',
             message: '',
             price: '',
-            number: ''
+            number: '',
+            createAt: '',
+            updateAt: '',
+            exist: ''
           },{
             id: '',
             bookCode: '',
             bookName: '',
-            ISBN: '',
+            isbn: '',
             src: '',
             press: '',
             author: '',
@@ -173,12 +184,15 @@
             shopCode: '',
             message: '',
             price: '',
-            number: ''
+            number: '',
+            createAt: '',
+            updateAt: '',
+            exist: ''
           },{
             id: '',
             bookCode: '',
             bookName: '',
-            ISBN: '',
+            isbn: '',
             src: '',
             press: '',
             author: '',
@@ -189,12 +203,15 @@
             shopCode: '',
             message: '',
             price: '',
-            number: ''
+            number: '',
+            createAt: '',
+            updateAt: '',
+            exist: ''
           },{
             id: '',
             bookCode: '',
             bookName: '',
-            ISBN: '',
+            isbn: '',
             src: '',
             press: '',
             author: '',
@@ -205,12 +222,15 @@
             shopCode: '',
             message: '',
             price: '',
-            number: ''
+            number: '',
+            createAt: '',
+            updateAt: '',
+            exist: ''
           },{
             id: '',
             bookCode: '',
             bookName: '',
-            ISBN: '',
+            isbn: '',
             src: '',
             press: '',
             author: '',
@@ -221,12 +241,15 @@
             shopCode: '',
             message: '',
             price: '',
-            number: ''
+            number: '',
+            createAt: '',
+            updateAt: '',
+            exist: ''
           },{
             id: '',
             bookCode: '',
             bookName: '',
-            ISBN: '',
+            isbn: '',
             src: '',
             press: '',
             author: '',
@@ -237,7 +260,10 @@
             shopCode: '',
             message: '',
             price: '',
-            number: ''
+            number: '',
+            createAt: '',
+            updateAt: '',
+            exist: ''
           }],
           search: ''
         }
@@ -247,7 +273,8 @@
           console.log(index, row);
           this.centerDiaologVisible = true;
           this.form.bookName = this.tableData[index].bookName
-          this.form.ISBN = this.tableData[index].ISBN
+          this.form.bookCode = this.tableData[index].bookCode
+          this.form.isbn = this.tableData[index].isbn
           this.form.src = this.tableData[index].src
           this.form.press = this.tableData[index].press
           this.form.author = this.tableData[index].author
@@ -259,18 +286,57 @@
 
         },
         handleDelete(index, row) {
-          console.log(index, row);
+          var bookCode = this.tableData[index].bookCode
+          var shopCode = JSON.parse(localStorage.getItem("shopInfo")).shopCode;
+          let param = new URLSearchParams();
+          param.append("shopCode",shopCode);
+          param.append("bookCode",bookCode);
+          delBookByCode(param).then(res=>{
+            if (res.data === 1){
+              getBookListByShopCode(JSON.parse(localStorage.getItem("shopInfo")).shopCode).then(response=>{
+                this.tableData=response.data
+              })
+            } else{
+              alert('删除失败')
+            }
+          })
         },
         onSubmit() {
           console.log('submit!');
+          var shopCode = JSON.parse(localStorage.getItem("shopInfo")).shopCode;
+          let param = new URLSearchParams();
+          param.append("shopCode",shopCode);
+          param.append("bookCode",this.form.bookCode);
+          param.append("bookName",this.form.bookName);
+          param.append("ISBN",this.form.isbn);
+          param.append("src",this.form.src);
+          param.append("press",this.form.press);
+          param.append("author",this.form.author);
+          param.append("edition",this.form.edition);
+          param.append("sortCode",this.form.sortCode);
+          param.append("message",this.form.message);
+          param.append("price",this.form.price);
+          param.append("number",this.form.number);
+          updBook(param).then(res=>{
+            if(res.data === 1){
+              alert('修改成功')
+              getBookListByShopCode(JSON.parse(localStorage.getItem("shopInfo")).shopCode).then(response=>{
+                // const aaa={...response.data,price:response.data.price.fixed(2)}
+                this.tableData=response.data
+              })
+            }else {
+              alert('修改失败')
+            }
+          })
         },
         handleChange(value) {
           console.log(value);
         }
       },
       created(){
-        this.axios.get('http://localhost:8080/static/mock/book.json').then(response=>{
-          // this.tableData=response.data;
+        getBookListByShopCode(JSON.parse(localStorage.getItem("shopInfo")).shopCode).then(response=>{
+          // const aaa={...response.data,price:response.data.price.fixed(2)}
+           this.tableData=response.data
         })
       }
     }

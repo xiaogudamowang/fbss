@@ -1,26 +1,45 @@
 <template>
-    <div class="div1">
-      <div v-for="(item,i) in list" style="margin: 5px;cursor:pointer;" @click="book">
-        <el-card shadow="hover" :body-style="{ padding: '6px' }">
-          <img :src="item.src" class="image">
-          <div style="padding: 14px; display: flex; flex-direction:column">
-            <span>{{item.bookName}}</span>
-            <div class="mas">
-              <div>{{item.author}}</div>
-              <div class="time">{{item.price.toFixed(2)}}</div>
+    <div class="div2">
+      <div class="div3">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form-item>
+            <el-input v-model="formInline.value" class="div2"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div class="div1">
+        <div v-for="(item,i) in list" style="margin: 5px;cursor:pointer;" @click="book(item.bookCode)">
+          <el-card shadow="hover" :body-style="{ padding: '6px' }">
+            <img :src="item.src" class="image">
+            <div style="padding: 14px; display: flex; flex-direction:column">
+              <span>{{item.bookName}}</span>
+              <div class="mas">
+                <div>{{item.author}}</div>
+                <div class="time">{{item.price.toFixed(2)}}</div>
+              </div>
             </div>
-          </div>
-        </el-card>
+          </el-card>
+        </div>
       </div>
     </div>
 </template>
 
 <script>
-    export default {
+  import {getBookList} from "../../../../api/index.js";
+  import {selectBook} from "../../../../api/index.js";
+
+  export default {
         name: "CardDiv",
       data(){
         return{
-          list:[]
+          list:[],
+          formInline: {
+            value: '',
+            region: ''
+          }
         }
       },
       computed:{
@@ -29,18 +48,23 @@
         }
       },
       methods:{
-          book(){
-            this.$router.push("/book");
+          book(code){
+            // console.log(code)
+            this.$router.push({name:'book',query:{code:code}});
+          },
+          onSubmit() {
+            // console.log(this.formInline.value)
+            selectBook(this.formInline.value).then(response=>{
+              this.list = response.data;
+            })
           }
       },
       created() {
-          this.axios.get('http://localhost:8080/static/mock/book.json').then(
-            response=>{
-              this.list=response.data;
-            }
-          )
+          getBookList().then(response=>{
+            this.list = response.data;
+          })
       }
-    }
+  }
 </script>
 
 <style scoped>
@@ -48,6 +72,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+  }
+  .div3{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: right;
+  }
+  .div2{
 
   }
   .time {

@@ -1,7 +1,7 @@
 <template>
   <div class="div1">
     <NavMenu></NavMenu>
-    <PBook></PBook>
+    <router-view></router-view>
   </div>
 </template>
 
