@@ -25,6 +25,7 @@ import UserAdmin from "../components/admin/UserAdmin";
 import ShopAdmin from "../components/admin/ShopAdmin";
 import PBook from "../components/main/index/index2/PBook";
 import Sort from "../components/main/index/index3/Sort";
+import UserPicture from "../components/user/UserPicture";
 
 Vue.use(VueRouter);
 
@@ -60,7 +61,8 @@ export default new VueRouter({
             {path: '/', redirect: '/info'},
             {path:'/info',component: UserInfo},
             {path:'/address',component: UserAddress},
-            {path:'/order',component: Order}
+            {path:'/order',component: Order},
+            {path:'/userPicture',component: UserPicture}
           ]
         }
       ]

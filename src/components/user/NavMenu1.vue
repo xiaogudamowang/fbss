@@ -18,6 +18,10 @@
         <i class="el-icon-menu"></i>
         <span slot="title">订单信息</span>
       </el-menu-item>
+      <el-menu-item index="/userPicture">
+        <i class="el-icon-menu"></i>
+        <span slot="title">更换头像</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

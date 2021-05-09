@@ -20,44 +20,43 @@
           <el-button @click="register()">注册</el-button>
         </el-form-item>
       </el-form>
-      <el-dialog title="注册" :visible.sync="centerDiaologVisible" width="500px" center>
+      <el-dialog title="注册" :visible.sync="centerDiaologVisible" width="1000px" center>
         <div class="div2">
-          <el-form ref="form" :model="ruleForm" label-width="80px" style="width: 100%;margin: 30px">
-
-
-              <el-form-item label="用户名" style="width: 80%">
-                <el-input type="input"></el-input>
+          <el-form ref="registerForm" :model="registerForm" label-width="80px" style="width: 100%">
+            <div class="div2">
+              <el-form-item label="用户名">
+                <el-input v-model="registerForm.userName"></el-input>
               </el-form-item>
-              <el-form-item label="头像地址" style="width: 80%">
-                <el-input type="input"></el-input>
+            </div>
+            <div class="div2">
+              <el-form-item label="密码">
+                <el-input v-model="registerForm.passWord"></el-input>
+              </el-form-item>
+              <el-form-item label="确认密码">
+                <el-input v-model="registerForm.passWord2"></el-input>
+              </el-form-item>
+            </div>
+            <div class="div2">
+              <el-form-item label="联系方式">
+                <el-input v-model="registerForm.phoneNumber"></el-input>
               </el-form-item>
               <el-form-item label="性别">
-                <el-select v-model="gender" placeholder="请选择性别">
-                  <el-option label="男" value="1"></el-option>
-                  <el-option label="女" value="0"></el-option>
+                <el-select v-model="registerForm.gender" placeholder="请选择活动区域">
+                  <el-option label="区域一" value="shanghai"></el-option>
+                  <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="联系电话" style="width: 80%">
-                <el-input type="input"></el-input>
+            </div>
+            <div class="div2">
+              <el-form-item label="电子邮箱">
+                <el-input v-model="registerForm.e_mail"></el-input>
               </el-form-item>
-              <el-form-item label="密码" style="width: 80%">
-                <el-input type="password"></el-input>
+              <el-form-item label="地址">
+                <el-input v-model="registerForm.address"></el-input>
               </el-form-item>
-              <el-form-item label="确认密码" style="width: 80%">
-                <el-input type="password"></el-input>
-              </el-form-item>
-              <el-form-item label="地址" style="width: 80%">
-                <el-input type="input"></el-input>
-              </el-form-item>
-              <el-form-item label="电子邮箱" style="width: 80%">
-                <el-input type="input"></el-input>
-              </el-form-item>
-              <el-form-item label="商店描述" style="width: 80%">
-                <el-input type="input"></el-input>
-              </el-form-item>
-
+            </div>
             <el-form-item>
-              <el-button type="primary" @click="">修改</el-button>
+              <el-button type="primary" @click="register">修改</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -189,5 +188,10 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+  }
+  .div2{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
   }
 </style>
