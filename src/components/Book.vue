@@ -17,7 +17,7 @@
           <div class="div7 divt">¥{{book.price}}</div>
           <el-input-number v-model="num" :min="1" :max="10" label="描述文字" ></el-input-number>
           <div class="div5">
-            <el-button type="primary">加入购物车</el-button>
+            <el-button type="primary" @click="car">加入购物车</el-button>
             <el-button type="success" @click="pay">立即下单</el-button>
           </div>
 
@@ -26,9 +26,6 @@
               <img :src="'http://localhost:8888/alipay/pay?bookCode='+bookCode+'&userCode='+userCode+'&number='+num">
             </div>
           </el-dialog>
-
-
-
         </div>
       </div>
 
@@ -37,6 +34,7 @@
 
 <script>
   import {getBookListByCode} from '../api/index.js'
+  import {addBookToCar} from '../api/index.js'
     export default {
         name: "Book",
       data(){
@@ -65,6 +63,23 @@
           this.centerDiaologVisible = true;
           this.bookCode = this.book.bookCode;
           this.userCode = JSON.parse(localStorage.getItem('userInfo')).userCode
+        },
+        car(){
+          let param = new URLSearchParams();
+          // 获取userCode
+          param.append('userCode',JSON.parse(localStorage.getItem('userInfo')).userCode)
+          // 获取bookCode
+          param.append('bookCode',this.bookCode)
+          // 获取number
+          param.append('number',this.num);
+          // 调用接口
+          addBookToCar(param).then(res=>{
+            if(res.data === 1){
+              alert("添加成功")
+            } else {
+              alert("添加失败")
+            }
+          })
         }
       }
     }

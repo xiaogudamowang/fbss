@@ -2,7 +2,7 @@
   <div class="div1">
     <a href="http://localhost:8080/"><img class="header-logo" src="../static/某书店Logo（header大）.png"></a>
     <div style="display: flex;flex-direction: row;">
-      <div style="margin: 8px 0;cursor:pointer " @click="user"><el-avatar icon="el-icon-user-solid"></el-avatar></div>
+      <div style="margin: 8px 0;cursor:pointer " @click="user"><img :src="'https://shudianbucket-guangzhou.oss-cn-beijing.aliyuncs.com/'+pic" width="50px" height="50px"/></div>
       <el-button @click="logout" size="mini" style="margin: 10px;">登 出</el-button>
     </div>
   </div>
@@ -12,6 +12,11 @@
 <script>
     export default {
       name: "Header",
+      data(){
+        return{
+          pic:''
+        }
+      },
       methods:{
         user(){
           if (localStorage.getItem("userInfo") == null || localStorage.getItem("userInfo") == ""){
@@ -24,6 +29,16 @@
           localStorage.setItem("userInfo","");
           this.$router.push('/login');
         }
+      },
+      created() {
+        if(!localStorage.getItem("userInfo")){
+          this.pic = '1620613909472.jpg';
+          console.log(this.pic)
+        }else{
+          this.pic = JSON.parse(localStorage.getItem("userInfo")).userPicture;
+          console.log(this.pic)
+        }
+
       }
     }
 </script>

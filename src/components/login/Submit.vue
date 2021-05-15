@@ -22,41 +22,49 @@
       </el-form>
       <el-dialog title="注册" :visible.sync="centerDiaologVisible" width="1000px" center>
         <div class="div2">
-          <el-form ref="registerForm" :model="registerForm" label-width="80px" style="width: 100%">
+          <el-form ref="registerForm" :model="registerForm" :rules="redisterrules" label-width="80px" style="width: 100%">
             <div class="div2">
-              <el-form-item label="用户名">
+              <el-form-item label="用户名" prop="userName">
                 <el-input v-model="registerForm.userName"></el-input>
               </el-form-item>
-            </div>
-            <div class="div2">
-              <el-form-item label="密码">
-                <el-input v-model="registerForm.passWord"></el-input>
-              </el-form-item>
-              <el-form-item label="确认密码">
-                <el-input v-model="registerForm.passWord2"></el-input>
-              </el-form-item>
-            </div>
-            <div class="div2">
-              <el-form-item label="联系方式">
+              <el-form-item label="联系方式" prop="phoneNumber">
                 <el-input v-model="registerForm.phoneNumber"></el-input>
               </el-form-item>
-              <el-form-item label="性别">
-                <el-select v-model="registerForm.gender" placeholder="请选择活动区域">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
-                </el-select>
+            </div>
+            <div class="div2">
+              <el-form-item label="密码" prop="passWord">
+                <el-input type="password" v-model="registerForm.passWord"></el-input>
+              </el-form-item>
+              <el-form-item label="确认密码" prop="passWord2">
+                <el-input type="password" v-model="registerForm.passWord2"></el-input>
               </el-form-item>
             </div>
             <div class="div2">
-              <el-form-item label="电子邮箱">
+              <el-form-item label="性别" prop="gender">
+                <el-select v-model="registerForm.gender" placeholder="请选择性别">
+                  <el-option label="男" value="1"></el-option>
+                  <el-option label="女" value="0"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="电子邮箱" prop="e_mail">
                 <el-input v-model="registerForm.e_mail"></el-input>
               </el-form-item>
-              <el-form-item label="地址">
-                <el-input v-model="registerForm.address"></el-input>
+            </div>
+            <div class="div2">
+              <el-form-item label="地址" prop="address">
+                <el-input
+                  type="textarea"
+                  placeholder="请输入地址"
+                  v-model="registerForm.address"
+                  maxlength="50"
+                  style="width: 660px"
+                  show-word-limit
+                >
+                </el-input>
               </el-form-item>
             </div>
             <el-form-item>
-              <el-button type="primary" @click="register">修改</el-button>
+              <el-button type="primary" @click="registersubmit('registerForm')">注册</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -68,6 +76,7 @@
   import {login} from "@/api/index.js"
   import {adminLogin} from "@/api/index.js"
   import {shopLogin} from "@/api/index.js"
+  import {register} from "@/api/index.js"
     export default {
         name: "Submit",
       data() {
@@ -88,11 +97,19 @@
             callback();
           }
         };
+        var validatePass3 = (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('请再次输入密码'));
+          } else if (value !== this.registerForm.passWord) {
+            callback(new Error('两次输入密码不一致!'));
+          } else {
+            callback();
+          }
+        };
         return {
           centerDiaologVisible: false,
           registerForm:{
             userName:'',
-            userPicture:'',
             gender:'',
             phoneNumber:'',
             passWord:'',
@@ -112,6 +129,23 @@
             pass: [
               { validator: validatePass2, trigger: 'blur' }
             ]
+          },
+          redisterrules:{
+            userName:[
+              {required: true, message: '请输入用户名', trigger: 'blur'}
+            ],gender:[
+              {required: true, message: '请选择性别', trigger: 'blur'}
+            ],phoneNumber:[
+              {required: true, message: '请输入联系方式', trigger: 'blur'}
+            ],passWord:[
+              {required: true, message: '请输入密码', trigger: 'blur'}
+            ],passWord2:[
+              {validator: validatePass3, trigger: 'blur',required: true}
+            ],address:[
+              {required: true, message: '请输入地址', trigger: 'blur'}
+            ],e_mail:[
+              {required: true, message: '请输入电子邮箱', trigger: 'blur'}
+            ],
           }
         };
       },
@@ -177,6 +211,27 @@
         },
         register(){
           this.centerDiaologVisible = true;
+
+        },
+        registersubmit(formName){
+          this.$refs[formName].validate((valid) => {
+            if (valid) {
+              let param = new URLSearchParams();
+              param.append('userName',this.registerForm.userName);
+              param.append('gender',this.registerForm.gender);
+              param.append('phoneNumber',this.registerForm.phoneNumber);
+              param.append('password',this.registerForm.passWord);
+              param.append('password2',this.registerForm.passWord2);
+              param.append('address',this.registerForm.address);
+              param.append('e_mail',this.registerForm.e_mail);
+              register(param).then(res=>{
+                alert(res.message)
+              })
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          });
         }
       }
     }

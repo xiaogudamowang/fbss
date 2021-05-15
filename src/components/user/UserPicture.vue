@@ -1,6 +1,9 @@
 <template>
-    <div>
-      <img :src="'https://shudianbucket-guangzhou.oss-cn-beijing.aliyuncs.com/'+pic">
+    <div class="div1">
+      <div style="height: 100%">
+        <span>当前头像：</span>
+        <img :src="'https://shudianbucket-guangzhou.oss-cn-beijing.aliyuncs.com/'+pic" width="100px" height="100px">
+      </div>
       <el-upload
         class="upload-demo"
         drag
@@ -16,23 +19,41 @@
 </template>
 
 <script>
+  import {updPicByUserCode} from "@/api/index.js"
+  import {login} from "@/api/index.js"
     export default {
         name: "UserPicture",
       data(){
         return{
-          pic:'123.jpg'
+          pic:''
         }
       },
       methods:{
           picTest(response, file, fileList){
-            console.log(response)
             this.pic = response;
-console.log('https://shudianbucket-guangzhou.oss-cn-beijing.aliyuncs.com/'+this.pic)
+            let param = new URLSearchParams;
+            param.append("userPicture",response);
+            param.append("userCode",JSON.parse(localStorage.getItem('userInfo')).userCode);
+            // 更新用户头像
+            updPicByUserCode(param).then(res=>{
+              // 获取最新用户信息
+              // 更新localStorage
+              console.log(res.data);
+              localStorage.setItem('userInfo',JSON.stringify(res.data));
+            })
           }
+      },
+      created() {
+          this.pic = JSON.parse(localStorage.getItem('userInfo')).userPicture
       }
     }
 </script>
 
 <style scoped>
+  .div1{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+  }
 
 </style>
