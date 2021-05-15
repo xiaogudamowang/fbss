@@ -26,6 +26,8 @@ import ShopAdmin from "../components/admin/ShopAdmin";
 import PBook from "../components/main/index/index2/PBook";
 import Sort from "../components/main/index/index3/Sort";
 import UserPicture from "../components/user/UserPicture";
+import ShopLogin from "../components/ShopLogin";
+import AdminLogin from "../components/AdminLogin";
 
 Vue.use(VueRouter);
 
@@ -69,6 +71,12 @@ export default new VueRouter({
     },{
       path: '/login',
       component: Login
+    },{
+      path: '/shopLogin',
+      component: ShopLogin
+    },{
+      path: '/adminLogin',
+      component: AdminLogin
     },{
       path: '/bookshop',
       component: BookShop,

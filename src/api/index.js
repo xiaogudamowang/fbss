@@ -39,5 +39,6 @@ export const updShopByShopCode=(params)=>post(`/updShopByShopCode`,params);
 export const updPicByUserCode=(params)=>post(`/updPicByUserCode`,params);
 export const addBookToCar=(params)=>post(`/addBookToCar`,params);
 export const register=(params)=>post(`/register`,params);
+export const shopRegister=(params)=>post(`/shopRegister`,params);
 
 

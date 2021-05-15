@@ -1,18 +1,12 @@
 <template>
     <div class="div1">
+      <span style="margin: 0px 0px 20px 40px;font-size: 40px;color: white">用户登录</span>
       <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="账号" prop="code">
           <el-input type="password" v-model="ruleForm.code" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
           <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="身份">
-          <el-radio-group v-model="ruleForm.resource">
-            <el-radio label="顾客"></el-radio>
-            <el-radio label="商家"></el-radio>
-            <el-radio label="管理员"></el-radio>
-          </el-radio-group>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -74,8 +68,6 @@
 
 <script>
   import {login} from "@/api/index.js"
-  import {adminLogin} from "@/api/index.js"
-  import {shopLogin} from "@/api/index.js"
   import {register} from "@/api/index.js"
     export default {
         name: "Submit",
@@ -153,53 +145,19 @@
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              if (this.ruleForm.resource === '顾客'){
-                let param = new URLSearchParams();
-                param.append('userName',this.ruleForm.code);
-                param.append('password',this.ruleForm.pass);
-                login(param).then(
-                  res=>{
-                    if(res.data === null){
-                      alert("账号或密码错误")
+              let param = new URLSearchParams();
+              param.append('userName',this.ruleForm.code);
+              param.append('password',this.ruleForm.pass);
+              login(param).then(
+                res=>{
+                  if(res.data === null){
+                    alert("账号或密码错误")
                     }else{
                       localStorage.setItem('userInfo',JSON.stringify(res.data));
                       this.$router.push("/index");
                     }
                   }
                 )
-              } else if(this.ruleForm.resource === '商家'){
-                let param = new URLSearchParams();
-                param.append('shopCode',this.ruleForm.code);
-                param.append('password',this.ruleForm.pass);
-                shopLogin(param).then(
-                  res=>{
-                    console.log(res.data)
-                    if(res.data === null){
-                      alert("账号或密码错误")
-                    }else{
-                      localStorage.setItem('shopInfo',JSON.stringify(res.data));
-                      this.$router.push("/bookshop");
-                    }
-                  }
-                )
-              } else if(this.ruleForm.resource === '管理员'){
-                let param = new URLSearchParams();
-                param.append('adminName',this.ruleForm.code);
-                param.append('password',this.ruleForm.pass);
-                adminLogin(param).then(
-                  res=>{
-                    if(res.data === null){
-                      alert("账号或密码错误")
-                    }else{
-                      localStorage.setItem('shopInfo',JSON.stringify(res.data));
-                      this.$router.push("/admin");
-                    }
-                  }
-                )
-              } else{
-                callback(new Error('跳转错误!'));
-              }
-
             } else {
               console.log('error submit!!');
               return false;
@@ -240,6 +198,7 @@
 <style scoped>
   .div1{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
