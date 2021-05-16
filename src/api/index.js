@@ -40,5 +40,7 @@ export const updPicByUserCode=(params)=>post(`/updPicByUserCode`,params);
 export const addBookToCar=(params)=>post(`/addBookToCar`,params);
 export const register=(params)=>post(`/register`,params);
 export const shopRegister=(params)=>post(`/shopRegister`,params);
-
+export const updadd=(params)=>post(`/updadd`,params);
+export const getBookTopByShopCode=(shopCode)=>get(`/getBookTopByShopCode?shopCode=`+shopCode);
+export const getSortTopByShopCode=(shopCode)=>get(`/getSortTopByShopCode?shopCode=`+shopCode);
 

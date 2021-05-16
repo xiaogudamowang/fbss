@@ -27,10 +27,10 @@
             <i class="el-icon-menu"></i>
             <span slot="title">订单查看</span>
           </el-menu-item>
-          <!--<el-menu-item index="bookData">-->
-            <!--<i class="el-icon-menu"></i>-->
-            <!--<span slot="title">数据统计</span>-->
-          <!--</el-menu-item>-->
+          <el-menu-item index="bookData">
+            <i class="el-icon-menu"></i>
+            <span slot="title">数据统计</span>
+          </el-menu-item>
         </el-menu>
       </div>
       <div style="width: 100%">

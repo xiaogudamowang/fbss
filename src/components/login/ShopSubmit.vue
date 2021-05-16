@@ -3,7 +3,7 @@
     <span style="margin: 0px 0px 20px 40px;font-size: 40px;color: white">商家登录</span>
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item label="账号" prop="code">
-        <el-input type="password" v-model="ruleForm.code" autocomplete="off"></el-input>
+        <el-input v-model="ruleForm.code" autocomplete="off" placeholder="账号或店铺名"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="pass">
         <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
