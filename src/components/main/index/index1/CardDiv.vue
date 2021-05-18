@@ -11,13 +11,13 @@
         </el-form>
       </div>
       <div class="div1">
-        <div v-for="(item,i) in list" style="margin: 5px;cursor:pointer;" @click="book(item.bookCode)">
+        <div v-for="(item,i) in list" style="margin: 5px;cursor:pointer;width: 240px;height: 328px" @click="book(item.bookCode)">
           <el-card shadow="hover" :body-style="{ padding: '6px' }">
             <img :src="item.src" class="image">
             <div style="padding: 14px; display: flex; flex-direction:column">
-              <span>{{item.bookName}}</span>
+              <span class="bookName">{{item.bookName}}</span>
               <div class="mas">
-                <div>{{item.author}}</div>
+                <div class="author">{{item.author}}</div>
                 <div class="time">{{item.price.toFixed(2)}}</div>
               </div>
             </div>
@@ -72,6 +72,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    height: 100%;
   }
   .div3{
     display: flex;
@@ -79,7 +80,7 @@
     justify-content: right;
   }
   .div2{
-
+    height: 100%;
   }
   .time {
     font-size: 23px;
@@ -105,5 +106,19 @@
 
   .clearfix:after {
     clear: both
+  }
+
+  .bookName{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 200px;
+  }
+
+  .author{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 200px;
   }
 </style>
