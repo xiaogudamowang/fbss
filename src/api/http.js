@@ -35,6 +35,19 @@ axios.interceptors.response.use(
   }
 );
 
+// 请求拦截器
+// 添加请求拦截器
+axios.interceptors.request.use((config) => {
+  const configSubstitute = config;
+  const token = localStorage.getItem('token')
+  const token2 = `Bearer ${token}`
+  configSubstitute.headers.Authorization = token2
+  return config;
+},
+  err => {
+    return Promise.reject(err)
+});
+
 /**
  * 封装get方法
  */

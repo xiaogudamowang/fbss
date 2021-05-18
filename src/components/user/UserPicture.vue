@@ -38,7 +38,11 @@
             updPicByUserCode(param).then(res=>{
               // 获取最新用户信息
               // 更新localStorage
-              console.log(res.data);
+              console.log(res.code)
+              if(res.code == 401){
+                alert(res.msg);
+                this.$router.push('/login');
+              }
               localStorage.setItem('userInfo',JSON.stringify(res.data));
             })
           }

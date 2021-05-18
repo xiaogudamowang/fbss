@@ -150,10 +150,11 @@
               param.append('password',this.ruleForm.pass);
               login(param).then(
                 res=>{
-                  if(res.data === null){
+                  if(res.code === 401){
                     alert("账号或密码错误")
                     }else{
                       localStorage.setItem('userInfo',JSON.stringify(res.data));
+                    localStorage.setItem('token',res.token);
                       this.$router.push("/index");
                     }
                   }

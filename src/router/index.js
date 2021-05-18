@@ -31,8 +31,8 @@ import AdminLogin from "../components/AdminLogin";
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
-  routes: [
+
+const routes= [
     {path: '/', redirect: 'index'},
     {
       path: '/index',
@@ -96,9 +96,37 @@ export default new VueRouter({
         {path:'/',redirect:'/userAdmin'},
         {path:'/userAdmin',component: UserAdmin},
         {path:'/shopAdmin',component: ShopAdmin}
-      ]
+      ],
+
     },
     {path: '*', component: NotFound}
-  ],
-  mode: 'history'
+  ]
+var router=new VueRouter({
+  'mode': 'history',
+  routes
 })
+
+var userpath = ['/index1-2','/pBook','/pbook','/index1-3','/sort','/index1-4','/book','/user','/info','/address','/order','/userPicture','/userpicture']
+var shoppath = ['/bookshop','/addBook','/addbook','/bookAdmin','/bookadmin','/bookShopMessage','/bookshopmessage','/changePassword','/changepassword','/shopOrder','/shoporder','/bookData','/bookdata']
+var adminpath = ['/admin','/userAdmin','/useradmin','/shopAdmin','/shopadmin']
+
+router.beforeEach((to, from,next)=>{
+  if(!localStorage.getItem('userInfo')){
+    console.log(localStorage.getItem('userInfo'))
+    if (userpath.includes(to.path)){
+      alert('请先登录')
+      router.push('/login')
+    }
+    if (shoppath.includes(to.path)){
+      alert('请先登录')
+      router.push('/shopLogin')
+    }
+    if (adminpath.includes(to.path)){
+      alert('请先登录')
+      router.push('/adminLogin')
+    }
+  }
+  next();
+})
+
+export default router;
