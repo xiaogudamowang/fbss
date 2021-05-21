@@ -111,21 +111,19 @@ var shoppath = ['/bookshop','/addBook','/addbook','/bookAdmin','/bookadmin','/bo
 var adminpath = ['/admin','/userAdmin','/useradmin','/shopAdmin','/shopadmin']
 
 router.beforeEach((to, from,next)=>{
-  if(!localStorage.getItem('userInfo')){
     console.log(localStorage.getItem('userInfo'))
-    if (userpath.includes(to.path)){
+    if (userpath.includes(to.path)&&!localStorage.getItem('userInfo')){
       alert('请先登录')
       router.push('/login')
     }
-    if (shoppath.includes(to.path)){
+    if (shoppath.includes(to.path)&&!localStorage.getItem('shopInfo')){
       alert('请先登录')
       router.push('/shopLogin')
     }
-    if (adminpath.includes(to.path)){
+    if (adminpath.includes(to.path)&&!localStorage.getItem('adminInfo')){
       alert('请先登录')
       router.push('/adminLogin')
     }
-  }
   next();
 })
 

@@ -66,7 +66,7 @@
                   if(res.data === null){
                     alert("账号或密码错误")
                   }else{
-                    localStorage.setItem('shopInfo',JSON.stringify(res.data));
+                    localStorage.setItem('adminInfo',JSON.stringify(res.data));
                     this.$router.push("/admin");
                   }
                 }
