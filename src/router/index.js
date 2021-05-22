@@ -28,6 +28,8 @@ import Sort from "../components/main/index/index3/Sort";
 import UserPicture from "../components/user/UserPicture";
 import ShopLogin from "../components/ShopLogin";
 import AdminLogin from "../components/AdminLogin";
+import shenHe from "../components/admin/shenHe";
+import Password from "../components/user/Password";
 
 Vue.use(VueRouter);
 
@@ -62,6 +64,7 @@ const routes= [
           children: [
             {path: '/', redirect: '/info'},
             {path:'/info',component: UserInfo},
+            {path:'/password',component: Password},
             {path:'/address',component: UserAddress},
             {path:'/order',component: Order},
             {path:'/userPicture',component: UserPicture}
@@ -95,7 +98,8 @@ const routes= [
       children:[
         {path:'/',redirect:'/userAdmin'},
         {path:'/userAdmin',component: UserAdmin},
-        {path:'/shopAdmin',component: ShopAdmin}
+        {path:'/shopAdmin',component: ShopAdmin},
+        {path:'/shenHe',component: shenHe}
       ],
 
     },
@@ -111,7 +115,6 @@ var shoppath = ['/bookshop','/addBook','/addbook','/bookAdmin','/bookadmin','/bo
 var adminpath = ['/admin','/userAdmin','/useradmin','/shopAdmin','/shopadmin']
 
 router.beforeEach((to, from,next)=>{
-    console.log(localStorage.getItem('userInfo'))
     if (userpath.includes(to.path)&&!localStorage.getItem('userInfo')){
       alert('请先登录')
       router.push('/login')

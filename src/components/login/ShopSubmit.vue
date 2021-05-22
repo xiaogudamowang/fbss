@@ -10,10 +10,13 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button @click="resetForm('ruleForm')">充值</el-button>
         <el-button @click="register()">注册</el-button>
       </el-form-item>
     </el-form>
+    <el-dialog :visible.sync="centerDiaologVisible2" width="150px" center>
+      <img src="http://localhost:8888/alipay/pay?bookCode=16213096370229&userCode=123&number=1" width="100px">
+    </el-dialog>
     <el-dialog title="注册" :visible.sync="centerDiaologVisible" width="1000px" center>
       <div class="div2">
         <el-form ref="registerForm" :model="registerForm" :rules="redisterrules" label-width="80px" style="width: 100%">
@@ -77,6 +80,8 @@
 <script>
   import {shopLogin} from "@/api/index.js"
   import {shopRegister} from "@/api/index.js"
+  import {updMemberTimeByBookCode} from "@/api/index.js"
+  
   export default {
     name: "ShopSubmit",
     data() {
@@ -108,6 +113,7 @@
       };
       return {
         centerDiaologVisible: false,
+        centerDiaologVisible2: false,
         registerForm:{
           shopName:'',
           phoneNumber:'',
@@ -164,8 +170,12 @@
                   if(res.data === null){
                     alert("账号或密码错误")
                   }else{
-                    localStorage.setItem('shopInfo',JSON.stringify(res.data));
-                    this.$router.push("/bookshop");
+                    if(res.data.memberTime < 1){
+                      alert('会员时间不足，请充值后登陆')
+                    }else{
+                      localStorage.setItem('shopInfo',JSON.stringify(res.data));
+                      this.$router.push("/bookshop");
+                    }
                   }
                 }
               )
@@ -176,7 +186,37 @@
         });
       },
       resetForm(formName) {
-        this.$refs[formName].resetFields();
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let param = new URLSearchParams();
+            param.append('shopCode',this.ruleForm.code);
+            param.append('password',this.ruleForm.pass);
+            shopLogin(param).then(
+              res=>{
+                console.log(res.data)
+                if(res.data === null){
+                  alert("账号或密码错误")
+                }else{
+                  //弹出二维码窗口
+                  this.centerDiaologVisible2 = true;
+                  //会员天数加30
+                  let param1 = new URLSearchParams();
+                  param1.append('shopCode',this.ruleForm.code);
+                  updMemberTimeByBookCode(param1).then(res=>{
+                    if (res.data == 1){
+                      console.log(res.message)
+                    } else{
+                      console.log('充值失败')
+                    }
+                  })
+                }
+              }
+            )
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       },
       register(){
         this.centerDiaologVisible = true;

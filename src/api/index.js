@@ -44,6 +44,10 @@ export const updadd=(params)=>post(`/updadd`,params);
 export const getBookTopByShopCode=(shopCode)=>get(`/getBookTopByShopCode?shopCode=`+shopCode);
 export const getSortTopByShopCode=(shopCode)=>get(`/getSortTopByShopCode?shopCode=`+shopCode);
 export const getMoRenAddressByUserCode=(userCode)=>get(`/getMoRenAddressByUserCode?userCode=`+userCode);
+export const getShopListShenHe=()=>get(`/getShopListShenHe`);
 export const carapy=(params)=>post(`/alipay/order`,params);
 export const insertOrder=(params)=>post(`/insertOrder`,params);
+export const updShopExistByShopCode=(params)=>post(`/updShopExistByShopCode`,params);
+export const updMemberTimeByBookCode=(params)=>post(`/updMemberTimeByBookCode`,params);
+export const updPasswordByCode=(params)=>post(`/updPasswordByCode`,params);
 

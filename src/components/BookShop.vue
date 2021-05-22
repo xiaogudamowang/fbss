@@ -31,6 +31,10 @@
             <i class="el-icon-menu"></i>
             <span slot="title">数据统计</span>
           </el-menu-item>
+          <el-menu-item @click="exit">
+            <i class="el-icon-menu"></i>
+            <span slot="title">退出登录</span>
+          </el-menu-item>
         </el-menu>
       </div>
       <div style="width: 100%">
@@ -49,6 +53,10 @@
         },
         handleClose(key, keyPath) {
           console.log(key, keyPath);
+        },
+        exit(){
+          localStorage.setItem("shopInfo","");
+          this.$router.push('/shopLogin');
         }
       }
     }

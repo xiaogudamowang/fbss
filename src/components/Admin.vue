@@ -16,6 +16,14 @@
             <i class="el-icon-menu"></i>
             <span slot="title">商家管理</span>
           </el-menu-item>
+          <el-menu-item index="/shenHe">
+            <i class="el-icon-menu"></i>
+            <span slot="title">店铺审核</span>
+          </el-menu-item>
+          <el-menu-item @click="exit">
+            <i class="el-icon-menu"></i>
+            <span slot="title">退出登录</span>
+          </el-menu-item>
         </el-menu>
       </div>
       <div>
@@ -35,6 +43,10 @@
         },
         handleClose(key, keyPath) {
           console.log(key, keyPath);
+        },
+        exit(){
+          localStorage.setItem("adminInfo","");
+          this.$router.push('/adminLogin');
         }
       }
     }

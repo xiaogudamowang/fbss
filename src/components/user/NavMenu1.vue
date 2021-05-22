@@ -10,6 +10,10 @@
         <i class="el-icon-menu"></i>
         <span slot="title">个人信息</span>
       </el-menu-item>
+      <el-menu-item index="/password">
+        <i class="el-icon-menu"></i>
+        <span slot="title">安全管理</span>
+      </el-menu-item>
       <el-menu-item index="/address">
         <i class="el-icon-menu"></i>
         <span slot="title">收货地址</span>
