@@ -16,6 +16,10 @@
             <i class="el-icon-menu"></i>
             <span slot="title">商家管理</span>
           </el-menu-item>
+          <el-menu-item index="/bookAdmin2">
+            <i class="el-icon-menu"></i>
+            <span slot="title">书籍管理</span>
+          </el-menu-item>
           <el-menu-item index="/shenHe">
             <i class="el-icon-menu"></i>
             <span slot="title">店铺审核</span>

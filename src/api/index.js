@@ -6,12 +6,12 @@ import {
 
 
 //查询书籍
-export const getBookList=()=>get(`/getBookList`);
+export const getBookList=(current)=>get(`/getBookList?current=`+current);
 export const getSortList=()=>get(`/getSortList`);
 export const getBookRankList=()=>get(`/getBookRankList`);
 export const selectBook=(condition)=>get(`/selectBook?condition=`+condition);
 export const getBookListByCode=(bookCode)=>get(`/getBookListByCode?bookCode=`+bookCode);
-export const getBookListByShopCode=(shopCode)=>get(`/getBookListByShopCode?shopCode=`+shopCode);
+export const getBookListByShopCode=(shopCode,current)=>get(`/getBookListByShopCode?shopCode=`+shopCode+'&current='+current);
 export const getBookListBySort=(sortName)=>get(`/getBookListBySort?sortName=`+sortName);
 export const gatCarList=(userCode)=>get(`/gatCarList?userCode=`+userCode);
 export const delCarByCarCode=(params)=>post(`/delCarByCarCode`,params);
@@ -31,8 +31,8 @@ export const delBookByCode=(params)=>post(`/delBookByCode`,params);
 export const updBookShop=(params)=>post(`/updBookShop`,params);
 export const changeShopPassword=(params)=>post(`/changeShopPassword`,params);
 export const getOrderListByShopCode=(shopCode)=>get(`/getOrderListByShopCode?shopCode=`+shopCode);
-export const getUserList=()=>get(`/getUserList`);
-export const getShopList=()=>get(`/getShopList`);
+export const getUserList=(current)=>get(`/getUserList?current=`+current);
+export const getShopList=(current)=>get(`/getShopList?current=`+current);
 export const delUserByUserCode=(params)=>post(`/delUserByUserCode`,params);
 export const delShopByShopCode=(params)=>post(`/delShopByShopCode`,params);
 export const updShopByShopCode=(params)=>post(`/updShopByShopCode`,params);
@@ -50,4 +50,7 @@ export const insertOrder=(params)=>post(`/insertOrder`,params);
 export const updShopExistByShopCode=(params)=>post(`/updShopExistByShopCode`,params);
 export const updMemberTimeByBookCode=(params)=>post(`/updMemberTimeByBookCode`,params);
 export const updPasswordByCode=(params)=>post(`/updPasswordByCode`,params);
+export const addSort=(params)=>post(`/addSort`,params);
+export const delSort=(params)=>post(`/delSort`,params);
+
 

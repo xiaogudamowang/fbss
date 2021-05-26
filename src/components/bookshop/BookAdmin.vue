@@ -64,8 +64,10 @@
       </el-table>
       <el-pagination
         background
+        :page-size="20"
         layout="prev, pager, next"
-        :total="1000"style=" margin: 15px auto">
+        @current-change="currentchange"
+        :total="total" style=" margin: 15px auto">
       </el-pagination>
       <el-dialog title="书籍信息修改" :visible.sync="centerDiaologVisible" width="800px" center>
         <div class="div2">
@@ -80,7 +82,9 @@
             </div>
             <div class="div2">
               <el-form-item label="src">
-                <el-input v-model="form.src"></el-input>
+                <ImgCutter v-on:cutDown="cutDown" :sizeChange="false" :cutWidth="200" :cutHeight="200">
+                  <el-button slot="open">选择图片</el-button>
+                </ImgCutter>
               </el-form-item>
               <el-form-item label="出版社">
                 <el-input v-model="form.press"></el-input>
@@ -97,8 +101,7 @@
             <div class="div2">
               <el-form-item label="书籍类别">
                 <el-select v-model="form.sortCode" placeholder="请选择书籍类别">
-                  <el-option label="文学" value="1"></el-option>
-                  <el-option label="科学" value="2"></el-option>
+                  <el-option v-for="(item,index) in tags" :label="item.sortName" :value="item.sortCode" :key="item.sortCode"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="书籍介绍">
@@ -128,11 +131,19 @@
   import {getBookListByShopCode} from "@/api/index.js"
   import {updBook} from "@/api/index.js"
   import {delBookByCode} from "@/api/index.js"
+  import {getSortList} from "@/api/index.js"
+  import ImgCutter from 'vue-img-cutter'
+  import axios from 'axios';
     export default {
         name: "BookAdmin",
+      components:{
+        ImgCutter
+      },
       data() {
         return {
+          tags: [],
           centerDiaologVisible: false,
+          current :0,
           form: {
             id:'',
             bookCode:'',
@@ -265,12 +276,12 @@
             updateAt: '',
             exist: ''
           }],
-          search: ''
+          search: '',
+          total:0
         }
       },
       methods: {
         handleEdit(index, row) {
-          console.log(index, row);
           this.centerDiaologVisible = true;
           this.form.bookName = this.tableData[index].bookName
           this.form.bookCode = this.tableData[index].bookCode
@@ -283,7 +294,19 @@
           this.form.message = this.tableData[index].message
           this.form.price = this.tableData[index].price
           this.form.number = this.tableData[index].number
-
+        },
+        cutDown(file){
+          let param = new FormData();
+          param.append('file',file.file);
+          let config = {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }  //添加请求头
+          axios.post('/picTest',param,config)
+            .then(response=>{
+              this.form.src = 'https://shudianbucket-guangzhou.oss-cn-beijing.aliyuncs.com/'+response.data;
+            })
         },
         handleDelete(index, row) {
           var bookCode = this.tableData[index].bookCode
@@ -297,7 +320,7 @@
                 this.tableData=response.data
               })
             } else{
-              alert('删除失败')
+              this.$message('删除失败')
             }
           })
         },
@@ -319,24 +342,36 @@
           param.append("number",this.form.number);
           updBook(param).then(res=>{
             if(res.data === 1){
-              alert('修改成功')
-              getBookListByShopCode(JSON.parse(localStorage.getItem("shopInfo")).shopCode).then(response=>{
+              this.$message('修改成功')
+              getBookListByShopCode(JSON.parse(localStorage.getItem("shopInfo")).shopCode,this.current).then(response=>{
                 // const aaa={...response.data,price:response.data.price.fixed(2)}
                 this.tableData=response.data
               })
             }else {
-              alert('修改失败')
+              this.$message('修改失败')
             }
           })
         },
         handleChange(value) {
           console.log(value);
+        },
+        currentchange(current){
+          this.current = current;
+          getBookListByShopCode(JSON.parse(localStorage.getItem("shopInfo")).shopCode,current).then(response=>{
+            // const aaa={...response.data,price:response.data.price.fixed(2)}
+            this.tableData=response.data
+            this.total = response.total;
+          })
         }
       },
       created(){
-        getBookListByShopCode(JSON.parse(localStorage.getItem("shopInfo")).shopCode).then(response=>{
+        getBookListByShopCode(JSON.parse(localStorage.getItem("shopInfo")).shopCode,1).then(response=>{
           // const aaa={...response.data,price:response.data.price.fixed(2)}
-           this.tableData=response.data
+          this.tableData=response.data
+          this.total = response.total;
+        });
+        getSortList().then(res=>{
+          this.tags = res.data;
         })
       }
     }

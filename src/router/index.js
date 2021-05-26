@@ -28,8 +28,10 @@ import Sort from "../components/main/index/index3/Sort";
 import UserPicture from "../components/user/UserPicture";
 import ShopLogin from "../components/ShopLogin";
 import AdminLogin from "../components/AdminLogin";
+import BookAdmin2 from "../components/admin/BookAdmin2";
 import shenHe from "../components/admin/shenHe";
 import Password from "../components/user/Password";
+import CutTest from "../components/login/CutTest";
 
 Vue.use(VueRouter);
 
@@ -99,9 +101,14 @@ const routes= [
         {path:'/',redirect:'/userAdmin'},
         {path:'/userAdmin',component: UserAdmin},
         {path:'/shopAdmin',component: ShopAdmin},
-        {path:'/shenHe',component: shenHe}
+        {path:'/shenHe',component: shenHe},
+        {path:'/bookAdmin2',component: BookAdmin2}
       ],
 
+    },
+    {
+      path:'/cutTest',
+      component:CutTest
     },
     {path: '*', component: NotFound}
   ]

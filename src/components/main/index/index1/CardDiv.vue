@@ -10,7 +10,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="div1">
+      <div class="div1" v-loading="loading">
         <div v-for="(item,i) in list" style="margin: 5px;cursor:pointer;width: 240px;height: 328px" @click="book(item.bookCode)">
           <el-card shadow="hover" :body-style="{ padding: '6px' }">
             <img :src="item.src" class="image">
@@ -24,6 +24,15 @@
           </el-card>
         </div>
       </div>
+      <div style="width: 100%;display: flex;justify-content:center;">
+        <el-pagination
+          background
+          :page-size="20"
+          layout="prev, pager, next"
+          :total="total"
+          @current-change="currentchange">
+        </el-pagination>
+      </div>
     </div>
 </template>
 
@@ -36,6 +45,8 @@
       data(){
         return{
           list:[],
+          total:0,
+          loading:false,
           formInline: {
             value: '',
             region: ''
@@ -57,11 +68,20 @@
             selectBook(this.formInline.value).then(response=>{
               this.list = response.data;
             })
+          },
+          currentchange(current){
+            this.loading = true;
+            getBookList(current).then(response=>{
+              this.list = response.data;
+              this.total = response.total;
+              this.loading = false;
+            })
           }
       },
       created() {
-          getBookList().then(response=>{
+          getBookList(1).then(response=>{
             this.list = response.data;
+            this.total = response.total;
           })
       }
   }
@@ -81,6 +101,9 @@
   }
   .div2{
     height: 100%;
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
   }
   .time {
     font-size: 23px;

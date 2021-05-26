@@ -2,7 +2,7 @@
   <div class="div1">
     <el-table
       :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-      style="width: 100%">
+      style="width: 100%;;margin-left: 16px;">
       <el-table-column
         fixed
         label="商店编号"
@@ -37,18 +37,20 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
       background
+      :page-size="20"
+      @current-change="currentchange"
       layout="prev, pager, next"
-      :total="1000"style=" margin: 15px auto">
+      :total="total"style=" margin: 15px auto">
     </el-pagination>
     <el-dialog title="商店信息修改" :visible.sync="centerDiaologVisible" width="800px" center>
       <div class="div2">
@@ -125,7 +127,8 @@
           exist: ''
         },
         tableData: [],
-        search: ''
+        search: '',
+        total:''
       }
     },
     methods: {
@@ -185,11 +188,19 @@
       },
       handleChange(value) {
         console.log(value);
+      },
+      currentchange(current){
+        getShopList(current).then(response=>{
+          this.tableData = response.data;
+          this.total = response.total;
+        })
       }
+
     },
     created(){
-      getShopList().then(response=>{
+      getShopList(0).then(response=>{
         this.tableData = response.data;
+        this.total = response.total;
       })
     }
   }

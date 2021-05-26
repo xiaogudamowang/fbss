@@ -2,7 +2,7 @@
   <div class="div1">
     <el-table
       :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-      style="width: 100%">
+      style="width: 100%;margin-left: 16px;">
       <el-table-column
         fixed
         label="顾客编号"
@@ -50,11 +50,18 @@
         </template>
       </el-table-column>
     </el-table>
+
+
+
     <el-pagination
       background
+      @current-change="currentchange"
       layout="prev, pager, next"
-      :total="1000"style=" margin: 15px auto">
+      :total="total"style=" margin: 15px auto">
     </el-pagination>
+
+
+
     <el-dialog title="顾客信息修改" :visible.sync="centerDiaologVisible" width="800px" center>
       <div class="div2">
         <el-form ref="form" :model="form" label-width="80px" style="width: 100%">
@@ -97,6 +104,7 @@
     data() {
       return {
         centerDiaologVisible: false,
+        total:'',
         form: {
           id:'',
           userCode: '',
@@ -185,12 +193,18 @@
       },
       handleChange(value) {
         console.log(value);
+      },
+      currentchange(current){
+        getUserList(current).then(response=>{
+
+        })
       }
     },
     created(){
-      getUserList().then(response=>{
+      getUserList(1).then(response=>{
         this.tableData = response.data;
         var data = this.tableData;
+        this.total = response.total;
         response.data.forEach(function (item, index) {
           if (item.gender === 1){
             data[index].gender = '男';

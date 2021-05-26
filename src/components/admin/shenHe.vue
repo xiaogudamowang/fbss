@@ -2,7 +2,7 @@
     <div class="div1">
       <el-table
         :data="tableData"
-        style="width: 100%">
+        style="width: 100%;margin-left: 16px;">
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">

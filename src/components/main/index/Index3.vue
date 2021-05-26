@@ -6,19 +6,10 @@
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
-        router
         >
-        <el-menu-item index="1" :route="{path: list[0].url, query: { sortName: list[0].sortName }}">
+        <el-menu-item v-for="(item,index) in list" :index="index" @click="tosort(item)" :key="index">
           <i class="el-icon-menu"></i>
-          <span slot="title">文学</span>
-        </el-menu-item>
-        <el-menu-item index="2" :route="{path: list[1].url, query: { sortName: list[1].sortName }}">
-          <i class="el-icon-menu"></i>
-          <span slot="title">教育</span>
-        </el-menu-item>
-        <el-menu-item index="3" :route="{path: list[2].url, query: { sortName: list[2].sortName }}">
-          <i class="el-icon-menu"></i>
-          <span slot="title">科学</span>
+          <span slot="title">{{item.sortName}}</span>
         </el-menu-item>
       </el-menu>
       </div>
@@ -27,16 +18,12 @@
 </template>
 
 <script>
-
+    import {getSortList} from '@/api/index.js'
     export default {
       name: "Index3",
       data(){
         return{
-          list:[
-            {url:'/sort',sortName:'文学'},
-            {url:'/sort',sortName:'教育'},
-            {url:'/sort',sortName:'科学'}
-          ]
+          list:[]
         }
       },
       methods: {
@@ -48,7 +35,15 @@
         },
         push(){
           console.log('22222');
+        },
+        tosort(sort){
+          this.$router.push({path:'sort',query:{sortName:sort.sortName}});
         }
+      },
+      created() {
+        getSortList().then(res=>{
+          this.list = res.data;
+        })
       }
     }
 </script>
