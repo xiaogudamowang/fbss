@@ -30,6 +30,13 @@
             <el-form-item label="总价">
               <span>{{ props.row.total }}</span>
             </el-form-item>
+            <el-form-item label="退款码" v-if="props.row.src != null">
+              <img :src="props.row.src">
+            </el-form-item>
+            <el-form-item label="操作" v-if="props.row.state ==='申请退货'">
+              <el-button size="small" type="primary" plain @click="querenshouhuo(props.row.orderCode)">确认收货</el-button>
+            </el-form-item>
+
           </el-form>
         </template>
       </el-table-column>
@@ -45,17 +52,59 @@
         label="顾客编号"
         prop="userCode">
       </el-table-column>
+      <el-table-column
+        prop="state"
+        label="标签"
+        width="100"
+        :filters="orderState"
+        :filter-method="filterTag"
+        filter-placement="bottom-end">
+        <template slot-scope="scope">
+          <el-tag
+            :type="stateType(scope.row.state)"
+            disable-transitions>{{scope.row.state}}</el-tag>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
   import {getOrderListByShopCode} from "@/api/index.js"
+  import {updStateByOrderCode} from "@/api/index.js"
     export default {
         name: "ShopOrder",
       data() {
         return {
-          tableData: []
+          tableData: [],
+          orderState:[{ text: '已下单', value: '已下单' }, { text: '申请退货', value: '申请退货' }],
+
+        }
+      },
+      computed:{
+        stateType: function () {
+          return function (state) {
+            var type = 'primary';
+            if (state === '申请退货'){
+              type = 'danger';
+            }else if(state === '退货完成'){
+              type = 'success';
+            }
+            return type;
+          }
+        }
+      },
+      methods:{
+        filterTag(value, row) {
+          return row.state === value;
+        },
+        querenshouhuo(orderCode){
+          let param = new URLSearchParams();
+          param.append('orderCode',orderCode);
+          param.append('state','退货完成');
+          updStateByOrderCode(param).then(res=>{
+            console.log(res.data);
+          })
         }
       },
       created() {

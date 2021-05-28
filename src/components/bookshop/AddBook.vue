@@ -1,42 +1,42 @@
 <template>
   <div class="div1">
-    <el-form ref="form" :model="form" label-width="80px" style="width: 100%">
+    <el-form ref="form" :model="form" label-width="80px" style="width: 100%" :rules="rules">
     <div style="display: flex;flex-direction:row;">
       <div class="div2">
-        <el-form-item label="书籍名称">
+        <el-form-item label="书籍名称" prop="bookName">
           <el-input v-model="form.bookName"></el-input>
         </el-form-item>
-        <el-form-item label="src">
+        <el-form-item label="src" prop="src">
           <ImgCutter v-on:cutDown="cutDown" :sizeChange="false" :cutWidth="200" :cutHeight="200">
             <el-button slot="open">选择图片</el-button>
           </ImgCutter>
         </el-form-item>
-        <el-form-item label="作者">
+        <el-form-item label="作者" prop="author">
           <el-input v-model="form.author"></el-input>
         </el-form-item>
-        <el-form-item label="书籍类别">
+        <el-form-item label="书籍类别" prop="sortCode">
           <el-select v-model="form.sortCode" placeholder="请选择书籍类别">
             <el-option v-for="(item,index) in tags" :label="item.sortName" :value="item.sortCode" :key="item.sortCode"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="书籍单价">
-          <el-input-number v-model="form.price" :precision="2" :step="0.1" :max="10000"></el-input-number>
+        <el-form-item label="书籍单价" prop="price">
+          <el-input-number v-model="form.price" :precision="2" :min="0" :step="0.1" :max="10000"></el-input-number>
         </el-form-item>
-        <el-form-item label="书籍库存">
+        <el-form-item label="书籍库存" prop="number">
           <el-input-number v-model="form.number" @change="handleChange" :min="1" :max="100000"></el-input-number>
         </el-form-item>
       </div>
       <div class="div2">
-        <el-form-item label="ISBN">
+        <el-form-item label="ISBN" prop="ISBN">
           <el-input v-model="form.ISBN"></el-input>
         </el-form-item>
-        <el-form-item label="出版社">
+        <el-form-item label="出版社" prop="press">
           <el-input v-model="form.press"></el-input>
         </el-form-item>
-        <el-form-item label="版次">
+        <el-form-item label="版次" prop="edition">
           <el-input-number v-model="form.edition" @change="handleChange" :min="1" :max="10"></el-input-number>
         </el-form-item>
-        <el-form-item label="书籍介绍">
+        <el-form-item label="书籍介绍" prop="message">
           <el-input type="textarea" v-model="form.message" rows="5"></el-input>
         </el-form-item>
       </div>
@@ -79,6 +79,18 @@
             createAt: '',
             updateAt: '',
             exist: ''
+          },
+          rules:{
+            bookName:[{required: true, message: '请输入书籍名称', trigger: 'blur'}],
+            src:[{required: true}],
+            price:[{required: true}],
+            number:[{required: true}],
+            edition:[{required: true}],
+            author:[{required: true, message: '请输入作者名称', trigger: 'blur'}],
+            sortCode:[{required: true, message: '请选择类别', trigger: 'blur'}],
+            ISBN:[{required: true, message: '请输入ISBN码', trigger: 'blur'}],
+            press:[{required: true, message: '请输入出版社名称', trigger: 'blur'}],
+            message:[{required: true, message: '请输入书籍简介', trigger: 'blur'}]
           }
         }
       },
@@ -138,8 +150,10 @@
     display: flex;
     justify-content: center;
     flex-direction: row;
-    width: 100%;
-    margin: 60px 0px;
+    width: 90%;
+    margin-top: 60px;
+    padding-right: 20px;
+    padding-left: 20px;
   }
   .div2{
     display: flex;

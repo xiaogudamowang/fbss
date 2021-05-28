@@ -45,6 +45,7 @@ export const getBookTopByShopCode=(shopCode)=>get(`/getBookTopByShopCode?shopCod
 export const getSortTopByShopCode=(shopCode)=>get(`/getSortTopByShopCode?shopCode=`+shopCode);
 export const getMoRenAddressByUserCode=(userCode)=>get(`/getMoRenAddressByUserCode?userCode=`+userCode);
 export const getShopListShenHe=()=>get(`/getShopListShenHe`);
+export const getBookShopByCode=(shopCode)=>get(`/getBookShopByCode?shopCode=`+shopCode);
 export const carapy=(params)=>post(`/alipay/order`,params);
 export const insertOrder=(params)=>post(`/insertOrder`,params);
 export const updShopExistByShopCode=(params)=>post(`/updShopExistByShopCode`,params);
@@ -52,5 +53,7 @@ export const updMemberTimeByBookCode=(params)=>post(`/updMemberTimeByBookCode`,p
 export const updPasswordByCode=(params)=>post(`/updPasswordByCode`,params);
 export const addSort=(params)=>post(`/addSort`,params);
 export const delSort=(params)=>post(`/delSort`,params);
+export const updsrcByOrderCode=(params)=>post(`/updsrcByOrderCode`,params);
+export const updStateByOrderCode=(params)=>post(`/updStateByOrderCode`,params);
 
 

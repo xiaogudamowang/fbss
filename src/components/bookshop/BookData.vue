@@ -1,10 +1,10 @@
 <template>
     <div class="div1">
       <div ref="chart" style="display: flex;flex-wrap: wrap">
-        <div style="width:500px;height:500px" id="main1"></div>
-        <div style="width:500px;height:500px" id="main2"></div>
-        <div style="width:500px;height:500px" id="main3"></div>
-        <div style="width:500px;height:500px" id="main4"></div>
+        <div style="width:500px;height:500px;margin: 24px" id="main1"></div>
+        <div style="width:500px;height:500px;margin: 24px" id="main2"></div>
+        <div style="width:500px;height:500px;margin: 24px" id="main3"></div>
+        <div style="width:500px;height:500px;margin: 24px" id="main4"></div>
       </div>
     </div>
 </template>
@@ -31,11 +31,13 @@
               left: 'center'
             },
             tooltip: {
-              trigger: 'item'
+              trigger: 'item',
+              confine:'true',
             },
             legend: {
               orient: 'vertical',
-              right:'0px'
+              right:'0',
+              textStyle:{width:'100',overflow:'truncate'}
             },
             series: [
               {
@@ -73,6 +75,7 @@
             },
             tooltip: {
               trigger: 'axis',
+              confine:'true',
               axisPointer: {            // 坐标轴指示器，坐标轴触发有效
                 type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
               }
@@ -131,7 +134,7 @@
             },
             legend: {
               orient: 'vertical',
-              right:'0px'
+              right:'0px',
             },
             series: [
               {

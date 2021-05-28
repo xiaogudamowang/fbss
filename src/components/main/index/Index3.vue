@@ -1,17 +1,16 @@
 <template>
     <div class="div1">
-      <div style="width: 250px">
+      <div style="width: 100px">
         <el-menu
-        default-active="1"
+        default-active="0"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
         >
-        <el-menu-item v-for="(item,index) in list" :index="index" @click="tosort(item)" :key="index">
-          <i class="el-icon-menu"></i>
-          <span slot="title">{{item.sortName}}</span>
-        </el-menu-item>
-      </el-menu>
+          <el-menu-item v-for="(item,index) in list" :index="index" @click="tosort(item)" :key="index">
+            <span slot="title">{{item.sortName}}</span>
+          </el-menu-item>
+        </el-menu>
       </div>
       <router-view></router-view>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="div1">
-    <a href="http://localhost:8080/"><img class="header-logo" src="../static/某书店Logo（header大）.png"></a>
+    <a href="http://localhost:8080/"><img class="header-logo" width="50px" src="https://shudianbucket-guangzhou.oss-cn-beijing.aliyuncs.com/%E5%9B%BE%E6%80%AA%E5%85%BD_d206fc54acd2c1946ff8e6f1609fd736_51302.jpg"></a>
     <div style="display: flex;flex-direction: row;">
       <div style="margin: 8px 0;cursor:pointer " @click="user"><img :src="'https://shudianbucket-guangzhou.oss-cn-beijing.aliyuncs.com/'+pic" width="50px" height="50px"/></div>
       <el-button @click="logout" size="mini" style="margin: 10px;">登 出</el-button>

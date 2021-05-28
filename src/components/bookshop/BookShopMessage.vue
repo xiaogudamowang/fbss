@@ -5,8 +5,13 @@
         <el-form-item label="书店名称">
           <el-input v-model="form.shopName"></el-input>
         </el-form-item>
-        <el-form-item label="书店图片">
-          <el-input v-model="form.shopPicture"></el-input>
+        <el-form-item label="付款码">
+          <div v-if="form.shopPicture != null" style="width: 100px">
+            <img :src="form.shopPicture" width="100px">
+          </div>
+          <ImgCutter v-on:cutDown="cutDown" :sizeChange="false" :cutWidth="200" :cutHeight="200" style="width: 150px">
+            <el-button slot="open">选择图片</el-button>
+          </ImgCutter>
         </el-form-item>
         <el-form-item label="联系方式">
           <el-input v-model="form.phoneNumber"></el-input>
@@ -34,8 +39,13 @@
 
 <script>
   import {updBookShop} from "@/api/index.js"
+  import ImgCutter from 'vue-img-cutter'
+  import axios from 'axios';
     export default {
         name: "BookShopMessage",
+      components:{
+        ImgCutter
+      },
       data() {
         return {
           form: {
@@ -56,6 +66,19 @@
         }
       },
       methods: {
+        cutDown(file){
+          let param = new FormData();
+          param.append('file',file.file);
+          let config = {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }  //添加请求头
+          axios.post('/picTest',param,config)
+            .then(response=>{
+              this.form.shopPicture = 'https://shudianbucket-guangzhou.oss-cn-beijing.aliyuncs.com/'+response.data;
+            })
+        },
         onSubmit() {
           let param = new URLSearchParams();
           param.append("shopCode",this.form.shopCode)
@@ -69,10 +92,10 @@
           updBookShop(param).then(res=>{
             console.log(res.data);
             if (res.data === 1){
-              alert('修改成功');
-              this.$router.push("/login");
+              this.$message('修改成功');
+              this.$router.push("/shopLogin");
             }else{
-              alert('修改失败');
+              this.$message('修改失败');
             }
           })
         },

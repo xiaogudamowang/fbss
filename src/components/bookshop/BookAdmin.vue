@@ -382,8 +382,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 100%;
-    margin: 10px 0px;
+    width: 95%;
+    margin-top: 12px;
+    padding-left: 16px;
+    padding-right: 12px;
   }
   .demo-table-expand label {
     width: 90px;

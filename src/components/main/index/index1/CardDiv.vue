@@ -6,9 +6,12 @@
             <el-input v-model="formInline.value" class="div2"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-button @click="onSubmit">查询</el-button>
           </el-form-item>
         </el-form>
+        <div>
+          <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1132072656&site=qq&menu=yes"><el-button>联系客服</el-button></a>
+        </div>
       </div>
       <div class="div1" v-loading="loading">
         <div v-for="(item,i) in list" style="margin: 5px;cursor:pointer;width: 240px;height: 328px" @click="book(item.bookCode)">

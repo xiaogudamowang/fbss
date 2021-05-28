@@ -3,10 +3,11 @@
     <div v-for="(item,i) in list1" style="margin: 5px;cursor:pointer;" @click="book(item.bookCode)">
       <el-card shadow="hover" :body-style="{ padding: '6px' }">
         <img :src="item.src" class="image">
-        <div style="padding: 14px;">
-          <span>{{item.span}}</span>
-          <div class="bottom clearfix">
-            <time class="time">{{item.time}}</time>
+        <div style="padding: 14px; display: flex; flex-direction:column">
+          <span class="bookName">{{item.bookName}}</span>
+          <div class="mas">
+            <div class="author">{{item.author}}</div>
+            <div class="time">{{item.price.toFixed(2)}}</div>
           </div>
         </div>
       </el-card>
@@ -32,7 +33,7 @@
       },
       methods:{
         book(code){
-          this.$router.push({name:'book',params:{code:code}});
+          this.$router.push({name:'book',query:{code:code}});
         }
       },
       mounted() {
@@ -55,22 +56,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    width: 780px;
+    width: 980px;
 
   }
   .time {
-    font-size: 13px;
+    font-size: 20px;
     color: #999;
-  }
-
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
-  .button {
-    padding: 0;
-    float: right;
   }
 
   .image {
@@ -86,5 +77,26 @@
 
   .clearfix:after {
     clear: both
+  }
+  .bookName{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 180px;
+  }
+
+  .mas{
+    display: flex;
+    justify-content:space-between;
+  }
+
+  .author{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 130px;
+    font-size: 12px;
+    color: gray;
+    padding-top: 8px;
   }
 </style>

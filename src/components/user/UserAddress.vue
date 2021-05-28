@@ -25,7 +25,7 @@
           <div>{{item.tel}}</div>
         </div>
           <div class="div3">
-            <el-button size="mini" @click="set(item.addCode)">设置默认</el-button>
+            <el-button size="mini" @click="set(item.addCode)" :disabled="item.addCode === moren">设置默认</el-button>
             <el-button size="mini" @click="edit(index)">编辑</el-button>
             <el-button size="mini" @click="del(item.addCode)">删除</el-button>
           </div>

@@ -67,7 +67,7 @@
         layout="prev, pager, next"
         :total="total"style=" margin: 15px auto">
       </el-pagination>
-      <el-button type="primary" style="width: 100px" @click="tijiao">结算</el-button>
+      <el-button type="primary" style="width: 100px" @click="tijiao" plain>结算</el-button>
       <el-dialog title="失效商品" :visible.sync="centerDiaologVisible2" width="1000px" center>
         <div class="div2">
           <el-table

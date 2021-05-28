@@ -55,6 +55,7 @@ const routes= [
         {
           path: '/index1-3', component: Index3,
           children:[
+            {path: '/', redirect: {path:'/sort',query:{sortName:'文学'}}},
             {path:'/sort',component:Sort}
           ]
         },
