@@ -206,7 +206,7 @@ import {insertOrder} from "@/api/index.js";
           total:20,
           multipleSelection: [],
           code:'1',
-          address:'',
+          address:{},
           addressList:[],
           totalMoney:''
         }
@@ -270,14 +270,19 @@ import {insertOrder} from "@/api/index.js";
             var carlist = [];
             rows.forEach((row,index) => {
               var car = {};
+              car.carCode = this.multipleSelection[index].carCode;
               car.bookCode = this.multipleSelection[index].bookCode;
               car.userCode = JSON.parse(localStorage.getItem('userInfo')).userCode
               car.number = this.multipleSelection[index].number;
               let param = new URLSearchParams();
+              param.append("carCode",car.carCode);
               param.append("bookCode",car.bookCode);
               param.append("userCode",car.userCode);
               param.append("number",car.number);
               param.append("bookName",this.multipleSelection[index].bookName);
+              param.append("name",this.address.name);
+              param.append("message",this.address.message);
+              param.append("tel",this.address.tel);
               insertOrder(param).then(res=>{})
               carlist.push(car);
             });
@@ -285,7 +290,33 @@ import {insertOrder} from "@/api/index.js";
               this.code = res;
             });
             this.centerDiaologVisible4 = true;
-          }
+          };
+          // 重新获取购物车
+          // 获取userCode
+          var userCode = JSON.parse(localStorage.getItem('userInfo')).userCode;
+          // 获取CarList
+          this.tableData=[];
+          this.tableDataIsNotExist=[];
+          gatCarList(userCode).then(response=>{
+            let t1 = this.tableData;
+            let t2 = this.tableDataIsNotExist;
+            var t = 0
+            response.data.forEach(myForEach);
+            // 遍历CarList将失效的放进失效数组，有效的放进常规数组
+            function myForEach(value, index, array) {
+              if (value.exist === 1){
+                t1.push(value)
+                t++
+              } else {
+                t2.push(value)
+              }
+            }
+            this.total = t;
+          })
+          getAddressList(userCode).then(res=>{
+            this.addressList = res.data;
+          });
+          this.centerDiaologVisible3 = false;
         },
         handleSelectionChange(val) {
           this.multipleSelection = val;

@@ -6,34 +6,43 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="订单编码">
+            <el-form-item label="订单编码：">
               <span>{{ props.row.orderCode }}</span>
             </el-form-item>
-            <el-form-item label="书籍编码">
+            <el-form-item label="书籍编码：">
               <span>{{ props.row.bookCode }}</span>
             </el-form-item>
-            <el-form-item label="书籍名称">
+            <el-form-item label="书籍名称：">
               <span>{{ props.row.bookName }}</span>
             </el-form-item>
-            <el-form-item label="数量">
+            <el-form-item label="数量：">
               <span>{{ props.row.number }}</span>
             </el-form-item>
-            <el-form-item label="单价">
+            <el-form-item label="单价：">
               <span>{{ props.row.price }}</span>
             </el-form-item>
-            <el-form-item label="用户编码">
+            <el-form-item label="用户编码：">
               <span>{{ props.row.userCode }}</span>
             </el-form-item>
-            <el-form-item label="订单状态">
+            <el-form-item label="收件人：">
+              <span>{{ props.row.name }}</span>
+            </el-form-item>
+            <el-form-item label="收件地址：">
+              <span>{{ props.row.address }}</span>
+            </el-form-item>
+            <el-form-item label="联系电话：">
+              <span>{{ props.row.tel }}</span>
+            </el-form-item>
+            <el-form-item label="订单状态：">
               <span>{{ props.row.state }}</span>
             </el-form-item>
-            <el-form-item label="总价">
+            <el-form-item label="总价：">
               <span>{{ props.row.total }}</span>
             </el-form-item>
-            <el-form-item label="退款码" v-if="props.row.src != null">
+            <el-form-item label="退款码：" v-if="props.row.src != null">
               <img :src="props.row.src">
             </el-form-item>
-            <el-form-item label="操作" v-if="props.row.state ==='申请退货'">
+            <el-form-item label="操作：" v-if="props.row.state ==='申请退货'">
               <el-button size="small" type="primary" plain @click="querenshouhuo(props.row.orderCode)">确认收货</el-button>
             </el-form-item>
 
@@ -77,7 +86,7 @@
       data() {
         return {
           tableData: [],
-          orderState:[{ text: '已下单', value: '已下单' }, { text: '申请退货', value: '申请退货' }],
+          orderState:[{ text: '已下单', value: '已下单' }, { text: '申请退货', value: '申请退货' }, { text: '已收货', value: '已收货' }, { text: '订单完成', value: '订单完成' }, { text: '退货完成', value: '退货完成' }],
 
         }
       },

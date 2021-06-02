@@ -151,7 +151,7 @@
               login(param).then(
                 res=>{
                   if(res.code === 401){
-                    alert("账号或密码错误")
+                    this.$message("账号或密码错误")
                     }else{
                       localStorage.setItem('userInfo',JSON.stringify(res.data));
                     localStorage.setItem('token',res.token);
@@ -184,7 +184,7 @@
               param.append('address',this.registerForm.address);
               param.append('e_mail',this.registerForm.e_mail);
               register(param).then(res=>{
-                alert(res.message)
+                this.$message(res.message)
               })
             } else {
               console.log('error submit!!');
